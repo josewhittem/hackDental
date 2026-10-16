@@ -1,0 +1,42 @@
+---
+// src/components/Buttons/JoseAvatar.astro
+// Avatar de Jose recortado a la cara (4 KB). Sustituye a perfil.svg (3,4 MB)
+// en tamaños pequeños: botones, chips, cabecera.
+import { Image } from 'astro:assets';
+import avatar from '../../assets/jose-avatar.webp';
+
+interface Props {
+  /** Tamaño en px en móvil */
+  size?: number;
+  /** Tamaño en px desde md (768px). Por defecto igual a size */
+  mdSize?: number;
+  /** none: solo la foto · white: aro blanco · story: aro tipo historia de Instagram */
+  ring?: 'none' | 'white' | 'story';
+  /** Color del hueco entre aro y foto (debe coincidir con el fondo) */
+  gap?: string;
+  class?: string;
+}
+
+const { size = 24, mdSize = size, ring = 'none', gap = '#15803d', class: className = '' } = Astro.props;
+const px = Math.max(size, mdSize);
+
+const ringClass = {
+  none: '',
+  white: 'p-[2px] bg-white',
+  story: 'p-[2px] bg-[linear-gradient(45deg,#f09433_0%,#e6683c_25%,#dc2743_50%,#cc2366_75%,#bc1888_100%)]',
+}[ring];
+---
+
+<span
+  class={`relative inline-flex shrink-0 rounded-full ${ringClass} ${className}`}
+  style={`--av:${size}px;--av-md:${mdSize}px;--av-gap:${gap}`}
+>
+  <Image
+    src={avatar}
+    alt=""
+    width={px}
+    height={px}
+    densities={[1, 2]}
+    class={`block size-[var(--av)] md:size-[var(--av-md)] rounded-full object-cover ${ring === 'none' ? '' : 'border-2 border-[var(--av-gap)]'}`}
+  />
+</span>

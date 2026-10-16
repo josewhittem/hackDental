@@ -1,0 +1,264 @@
+---
+// src/components/Buttons/ButtonAuditoria.astro
+// CTA principal "Quiero aplicar a una auditoría" con la marca personal de Jose.
+// Misma base que Ebook/Button.astro (verde #16a34a→#15803d, borde 3D #064e3b, Oswald),
+// en 6 versiones. Uso en Hero.astro:
+//   <ButtonAuditoria variant="fundador" />
+import JoseAvatar from './JoseAvatar.astro';
+
+type Variant = 'fundador' | 'pase' | 'plazas' | 'firma' | 'mensaje' | 'checkout';
+
+interface Props {
+  variant?: Variant;
+  href?: string;
+  /** Texto principal (se muestra en mayúsculas) */
+  text?: string;
+  name?: string;
+  role?: string;
+  /** Rebote continuo como el botón actual (se apaga automáticamente si el usuario tiene activado "reducir movimiento") */
+  bounce?: boolean;
+  newTab?: boolean;
+  /** Solo variant="plazas". Usa números reales de tu agenda. */
+  spotsLeft?: number;
+  spotsTotal?: number;
+  spotsPeriod?: string;
+  /** Solo variant="mensaje" */
+  message?: string;
+  class?: string;
+}
+
+const {
+  variant = 'fundador',
+  href = '/contacto',
+  text = 'Quiero aplicar a una auditoría',
+  name = 'Jose Whittembury',
+  role = 'Fundador de HackDental',
+  bounce = true,
+  newTab = false,
+  spotsLeft = 3,
+  spotsTotal = 10,
+  spotsPeriod = 'Este mes',
+  message = 'Hola, soy Jose. La auditoría de tu clínica la hago yo, personalmente.',
+  class: className = '',
+} = Astro.props;
+
+const firstName = name.split(' ')[0];
+const linkAttrs = newTab ? { target: '_blank', rel: 'noopener' } : {};
+const taken = Math.min(spotsTotal, Math.max(0, spotsTotal - spotsLeft));
+const pct = spotsTotal > 0 ? Math.round((taken / spotsTotal) * 100) : 0;
+
+// Superficie verde 3D compartida (mismos valores que Ebook/Button.astro)
+const surface = [
+  'cta group relative isolate flex w-full overflow-hidden rounded-lg text-white',
+  'bg-gradient-to-b from-[#16a34a] to-[#15803d] border-t border-white/25',
+  'shadow-[0_4px_0_#064e3b,0_10px_15px_rgba(0,0,0,0.3)] md:shadow-[0_6px_0_#064e3b,0_15px_20px_rgba(0,0,0,0.4)]',
+  'transition-all duration-200 ease-out hover:scale-[1.03] hover:brightness-110',
+  'active:scale-100 active:translate-y-[3px] md:active:translate-y-[5px]',
+  'active:shadow-[0_1px_0_#064e3b,0_4px_8px_rgba(0,0,0,0.3)] md:active:shadow-[0_1px_0_#064e3b,0_6px_10px_rgba(0,0,0,0.35)]',
+  'focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-[#86efac]',
+].join(' ');
+
+const bounceClass = bounce ? 'motion-safe:animate-[bounce-y_1.6s_ease-in-out_infinite]' : '';
+const titleClass = 'font-heading uppercase tracking-wide leading-[1.05] text-balance [text-shadow:0_1px_2px_rgba(0,0,0,0.3)]';
+const chipClass = 'rounded-md bg-[#064e3b]/50 font-semibold uppercase tracking-[0.08em] text-white';
+---
+
+{variant === 'fundador' && (
+  <a href={href} {...linkAttrs} class={`${surface} ${bounceClass} items-center gap-3 px-3.5 py-3 text-left md:gap-4 md:px-5 md:py-4 ${className}`}>
+    <span class="cta-shine" aria-hidden="true"></span>
+    <JoseAvatar size={48} mdSize={60} ring="story" gap="#16a34a" class="relative z-10" />
+    <span class="relative z-10 min-w-0 flex-1">
+      <span class={`${titleClass} block text-[21px] md:text-[28px]`}>{text}</span>
+      <span class="mt-1.5 inline-block rounded-md bg-[#064e3b]/50 px-2 py-0.5 text-[12.5px] font-semibold text-white md:text-[14px]">
+        Con {name}<span class="hidden md:inline"> · {role}</span>
+      </span>
+    </span>
+    <span class="relative z-10 grid size-9 shrink-0 place-items-center rounded-full bg-[#064e3b]/40 ring-1 ring-white/30 transition-transform duration-300 group-hover:translate-x-1 md:size-11" aria-hidden="true">
+      <svg class="size-5 md:size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+    </span>
+  </a>
+)}
+
+{variant === 'pase' && (
+  <a href={href} {...linkAttrs} class={`cta cta-pase group relative isolate block w-full text-white transition-all duration-200 ease-out hover:scale-[1.03] active:scale-100 active:translate-y-[3px] md:active:translate-y-[5px] focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-[#86efac] ${bounceClass} ${className}`}>
+    <span class="cta-ticket relative flex overflow-hidden rounded-lg border-t border-white/25 bg-gradient-to-b from-[#16a34a] to-[#15803d]">
+      <span class="cta-shine" aria-hidden="true"></span>
+      <span class="relative z-10 min-w-0 flex-1 px-4 py-3 text-left md:px-6 md:py-4">
+        <span class={`${chipClass} inline-block px-2 py-0.5 text-[10px] tracking-[0.16em] md:text-[11.5px]`}>Auditoría gratuita</span>
+        <span class={`${titleClass} mt-1.5 block text-[21px] md:text-[28px]`}>{text}</span>
+        <span class="mt-1 block text-[12.5px] font-semibold text-white md:text-[14px]">Reunión 1:1 con {name}</span>
+      </span>
+      <span class="cta-stub relative z-10 flex w-[80px] shrink-0 flex-col items-center justify-center gap-1.5 border-l-2 border-dashed border-white/40 bg-[#064e3b]/35 md:w-[108px] md:gap-2">
+        <JoseAvatar size={40} mdSize={54} ring="white" gap="#127a3c" />
+        <span class="font-heading text-[13px] uppercase tracking-[0.2em] md:text-[15px]">Pase</span>
+      </span>
+    </span>
+  </a>
+)}
+
+{variant === 'plazas' && (
+  <a href={href} {...linkAttrs} class={`${surface} ${bounceClass} flex-col items-center px-4 py-3.5 text-center md:px-8 md:py-5 ${className}`}>
+    <span class="cta-shine" aria-hidden="true"></span>
+    <span class={`${titleClass} relative z-10 block text-[20px] md:text-[28px]`}>{text}</span>
+    <span class="relative z-10 mt-2.5 block w-full max-w-[26rem] md:mt-3">
+      <span class="flex items-center justify-between gap-3 text-[11px] font-bold uppercase tracking-[0.08em] md:text-[12.5px]">
+        <span class="inline-flex items-center gap-1.5 rounded-md bg-[#064e3b]/50 px-1.5 py-0.5"><span class="cta-dot" aria-hidden="true"></span>Quedan {spotsLeft} de {spotsTotal} plazas</span>
+        <span class="rounded-md bg-[#064e3b]/50 px-1.5 py-0.5">{spotsPeriod}</span>
+      </span>
+      <span class="mt-1.5 block h-2.5 overflow-hidden rounded-full bg-[#064e3b]/70 shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)] md:h-3" role="presentation">
+        <span class="cta-bar block h-full rounded-full" style={`width:${pct}%`}></span>
+      </span>
+    </span>
+    <span class={`${chipClass} relative z-10 mt-2.5 inline-flex items-center gap-2 py-1 pl-3 pr-1 text-[10.5px] md:mt-3 md:text-[12px]`}>
+      Reúnete con {name}
+      <JoseAvatar size={20} mdSize={24} />
+    </span>
+  </a>
+)}
+
+{variant === 'firma' && (
+  <>
+    <link rel="stylesheet" href={`https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap&text=${encodeURIComponent(name)}`} />
+    <a href={href} {...linkAttrs} class={`${surface} ${bounceClass} flex-col items-center px-4 pb-3 pt-3.5 md:px-8 md:pb-4 md:pt-5 ${className}`}>
+      <span class="cta-shine" aria-hidden="true"></span>
+      <span class={`${titleClass} relative z-10 block text-[20px] md:text-[28px]`}>{text}</span>
+      <span class="relative z-10 mt-2.5 flex items-center gap-2 md:mt-3 md:gap-3">
+        <span class="text-[9.5px] font-bold uppercase tracking-[0.2em] text-white md:text-[11px]">Reúnete con</span>
+        <JoseAvatar size={30} mdSize={38} ring="white" gap="#15873f" />
+        <span class="cta-sign pt-1 text-[30px] leading-none text-white md:text-[38px]">{name}</span>
+      </span>
+    </a>
+  </>
+)}
+
+{variant === 'mensaje' && (
+  <div class={`w-full ${className}`}>
+    <div class="cta-chat mb-3 flex items-end gap-2.5 text-left md:mb-4 md:gap-3">
+      <JoseAvatar size={40} mdSize={48} ring="story" gap="#151719" />
+      <div class="relative max-w-[86%] rounded-2xl rounded-bl-md bg-white px-3.5 py-2.5 text-[#0f172a] shadow-[0_10px_30px_rgba(0,0,0,0.35)] md:px-4 md:py-3">
+        <p class="text-[11.5px] font-bold text-[#15803d] md:text-[12.5px]">{name}<span class="font-medium text-[#475569]">&nbsp;· {role}</span></p>
+        <div class="grid">
+          <span class="cta-typing [grid-area:1/1]" aria-hidden="true"><i></i><i></i><i></i></span>
+          <p class="cta-msg mt-0.5 text-[14.5px] leading-snug md:text-[16px] [grid-area:1/1]">{message}</p>
+        </div>
+      </div>
+    </div>
+    <a href={href} {...linkAttrs} class={`${surface} ${bounceClass} flex-col items-center px-4 py-3.5 md:px-8 md:py-4`}>
+      <span class="cta-shine" aria-hidden="true"></span>
+      <span class={`${titleClass} relative z-10 block text-[20px] md:text-[28px]`}>{text}</span>
+      <span class={`${chipClass} relative z-10 mt-1.5 inline-flex items-center gap-1.5 px-2.5 py-1 text-[10.5px] md:text-[12px]`}>
+        <svg class="size-3.5 md:size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5" /><path d="M4 9h11a5 5 0 0 1 5 5v6" /></svg>
+        Responder a {firstName} · te contacta en 24 h
+      </span>
+    </a>
+  </div>
+)}
+
+{variant === 'checkout' && (
+  <a href={href} {...linkAttrs} class={`${surface} ${bounceClass} flex-col ${className}`}>
+    <span class="cta-shine" aria-hidden="true"></span>
+    <span class="relative z-10 flex items-center justify-center gap-2 bg-[#064e3b]/50 px-3 py-1.5 text-[11.5px] md:py-2 md:text-[13px]">
+      <span class="text-white/90">Atendido por</span>
+      <JoseAvatar size={20} mdSize={24} />
+      <span class="font-bold">{name}</span>
+      <span class="rounded bg-white/20 px-1.5 py-px text-[9.5px] font-bold uppercase tracking-[0.14em] md:text-[10.5px]">Fundador</span>
+    </span>
+    <span class="relative z-10 flex flex-col items-center px-4 pb-3.5 pt-3 md:px-8 md:pb-5 md:pt-4">
+      <span class={`${titleClass} flex items-center gap-2 text-[20px] md:text-[28px]`}>
+        {text}
+        <svg class="hidden size-7 transition-transform duration-300 group-hover:translate-x-1 md:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+      </span>
+      <span class="mt-2 flex flex-wrap justify-center gap-1.5 text-[10.5px] font-bold uppercase tracking-[0.06em] md:mt-2.5 md:gap-2 md:text-[12px]">
+        {['Gratis', 'Reunión 1:1', 'Respuesta en 24 h'].map((item) => (
+          <span class="inline-flex items-center gap-1 rounded-md bg-[#064e3b]/50 px-1.5 py-0.5">
+            <svg class="size-3 md:size-3.5 text-[#86efac]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>
+            {item}
+          </span>
+        ))}
+      </span>
+    </span>
+  </a>
+)}
+
+<style>
+  /* Brillo al pasar el cursor (igual que Ebook/Button.astro) */
+  .cta-shine {
+    position: absolute;
+    inset-block: 0;
+    left: -150%;
+    width: 100%;
+    z-index: 5;
+    pointer-events: none;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transform: skewX(-20deg);
+  }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .cta:hover .cta-shine { animation: cta-shine-sweep 0.75s forwards; }
+  }
+  @keyframes cta-shine-sweep { to { left: 150%; } }
+
+  /* Pase: muescas del ticket + borde 3D que sigue la forma */
+  .cta-ticket {
+    --stub: 80px;
+    --r: 9px;
+    --notch: radial-gradient(circle var(--r) at calc(100% - var(--stub)) 0, #0000 calc(var(--r) - 0.5px), #000 var(--r));
+    --notch-b: radial-gradient(circle var(--r) at calc(100% - var(--stub)) 100%, #0000 calc(var(--r) - 0.5px), #000 var(--r));
+    -webkit-mask: var(--notch) top / 100% 51% no-repeat, var(--notch-b) bottom / 100% 51% no-repeat;
+    mask: var(--notch) top / 100% 51% no-repeat, var(--notch-b) bottom / 100% 51% no-repeat;
+  }
+  .cta-pase { filter: drop-shadow(0 4px 0 #064e3b) drop-shadow(0 10px 12px rgb(0 0 0 / 0.3)); }
+  .cta-pase:hover { filter: brightness(1.1) drop-shadow(0 4px 0 #064e3b) drop-shadow(0 10px 12px rgb(0 0 0 / 0.3)); }
+  .cta-pase:active { filter: drop-shadow(0 1px 0 #064e3b) drop-shadow(0 4px 8px rgb(0 0 0 / 0.3)); }
+  @media (min-width: 48rem) {
+    .cta-ticket { --stub: 108px; --r: 11px; }
+    .cta-pase { filter: drop-shadow(0 6px 0 #064e3b) drop-shadow(0 15px 18px rgb(0 0 0 / 0.4)); }
+    .cta-pase:hover { filter: brightness(1.1) drop-shadow(0 6px 0 #064e3b) drop-shadow(0 15px 18px rgb(0 0 0 / 0.4)); }
+    .cta-pase:active { filter: drop-shadow(0 1px 0 #064e3b) drop-shadow(0 6px 10px rgb(0 0 0 / 0.35)); }
+  }
+
+  /* Plazas: barra de progreso con rayas tipo "stock" */
+  .cta-bar {
+    background-image:
+      linear-gradient(-45deg, rgb(255 255 255 / 0.4) 25%, transparent 25% 50%, rgb(255 255 255 / 0.4) 50% 75%, transparent 75%),
+      linear-gradient(#fde047, #facc15);
+    background-size: 14px 14px, 100% 100%;
+  }
+  .cta-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #fde047;
+    box-shadow: 0 0 0 0 rgb(253 224 71 / 0.7);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .cta-bar { animation: cta-fill 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) both, cta-stripes 0.9s linear infinite; }
+    .cta-dot { animation: cta-ping 1.6s ease-out infinite; }
+  }
+  @keyframes cta-fill { from { width: 0; } }
+  @keyframes cta-stripes { to { background-position: 14px 0, 0 0; } }
+  @keyframes cta-ping { 70%, 100% { box-shadow: 0 0 0 6px rgb(253 224 71 / 0); } }
+
+  /* Firma */
+  .cta-sign {
+    font-family: 'Mrs Saint Delafield', 'Brush Script MT', cursive;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  /* Mensaje: burbuja que "escribe" y luego muestra el texto */
+  .cta-typing { display: flex; align-items: center; gap: 4px; height: 22px; opacity: 0; }
+  .cta-typing i { width: 7px; height: 7px; border-radius: 999px; background: #94a3b8; }
+  @media (prefers-reduced-motion: no-preference) {
+    .cta-chat { animation: cta-pop 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.3) 0.2s both; }
+    .cta-typing { animation: cta-typing-show 1.5s steps(1, end) 0.4s both; }
+    .cta-typing i { animation: cta-blink 0.9s ease-in-out infinite; }
+    .cta-typing i:nth-child(2) { animation-delay: 0.15s; }
+    .cta-typing i:nth-child(3) { animation-delay: 0.3s; }
+    .cta-msg { animation: cta-msg-in 0.35s ease-out 1.9s both; }
+  }
+  @keyframes cta-pop { from { opacity: 0; transform: translateY(8px) scale(0.96); } }
+  @keyframes cta-typing-show { 0% { opacity: 1; } 100% { opacity: 0; } }
+  @keyframes cta-blink { 0%, 100% { opacity: 0.35; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-2px); } }
+  @keyframes cta-msg-in { from { opacity: 0; transform: translateY(3px); } }
+</style>
