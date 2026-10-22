@@ -60,7 +60,7 @@
     });
   }
   wordBlocks.forEach(block => {
-    const targets = block.tagName === 'H2' ? [block] : $$('p', block);
+    const targets = block.tagName === 'H2' ? [block] : $$('h2, p', block);
     targets.forEach(splitWords);
   });
   function paintWords() {

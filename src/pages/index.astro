@@ -6,7 +6,7 @@ import IconSprite from '../components/Site/IconSprite.astro';
 import CtaButton from '../components/Site/CtaButton.astro';
 import { Image } from 'astro:assets';
 import founder from '../assets/Ebook/author.webp';
-import joseCutout from '../assets/jose-cutout.webp';
+import joseAvatar from '../assets/jose-avatar.webp';
 
 const img = (name: string) => `/site/${name}`;
 
@@ -151,7 +151,7 @@ const founderTags = ['FundadorDeHackDental', 'MarketingDental', 'SoloClínicasDe
     <span class="orbit orbit-3" aria-hidden="true"></span>
     <span class="orbit orbit-4" aria-hidden="true"></span>
 
-    <div class="hero-head container hero-grid">
+    <div class="hero-head container">
       <div class="fan" id="fan" aria-hidden="true">
         {fanCards.map(([file, label]) => (
           <div class="fan-card"><img src={img(file)} alt=""><span>{label}</span></div>
@@ -161,11 +161,9 @@ const founderTags = ['FundadorDeHackDental', 'MarketingDental', 'SoloClínicasDe
       <div class="hero-copy">
         <span class="trust-pill">
           <span class="avatars">
-            <img src={img('doctor-phone.jpg')} alt="">
-            <img src={img('doctor-teal.jpg')} alt="">
-            <img src={img('doctor-pink.jpg')} alt="">
+            <Image src={joseAvatar} alt="" width={24} height={24} densities={[1, 2]} />
           </span>
-          <span>Marketing <b>solo</b> para clínicas dentales en <b>España</b></span>
+          <span><b>Jose Whittembury</b>, fundador · Marketing <b>solo</b> para clínicas dentales en <b>España</b></span>
         </span>
 
         <p class="hero-eyebrow"><svg class="icon"><use href="#i-tooth"/></svg> Para dueños de clínicas dentales</p>
@@ -186,21 +184,7 @@ const founderTags = ['FundadorDeHackDental', 'MarketingDental', 'SoloClínicasDe
         </ul>
       </div>
 
-      <div class="hero-founder">
-        <div class="founder-stage">
-          <span class="founder-bg" aria-hidden="true"></span>
-          <Image src={joseCutout} alt="Jose Whittembury, fundador de HackDental" class="founder-cutout" widths={[420, 640, 900]} sizes="(max-width: 720px) 62vw, 380px" loading="eager" />
-          <span class="ftag t-1"><b>Jose Whittembury</b><small>Fundador de HackDental</small></span>
-          <span class="ftag t-2"><svg class="icon"><use href="#i-user"/></svg> Trabaja directamente contigo</span>
-          <span class="ftag t-3"><span class="flag-es" aria-hidden="true"></span> Solo clínicas en España</span>
-          <span class="ftag t-4"><svg class="icon"><use href="#i-zap"/></svg> Plazas limitadas</span>
-          <div class="wa-card" aria-hidden="true">
-            <div class="wa-head"><svg class="icon-brand"><use href="#i-wa"/></svg> WhatsApp · HackDental</div>
-            <div class="wa-msg in">Hola Jose, tengo una clínica en Madrid y quiero más pacientes 🦷<small>10:41</small></div>
-            <div class="wa-msg out">¡Genial! Hoy mismo te escribo y agendamos tu auditoría ✅<small>10:42 ✓✓</small></div>
-          </div>
-        </div>
-      </div>
+      <svg class="mascot hero-mascot" aria-hidden="true"><use href="#mascot"/></svg>
     </div>
 
     <!-- Carrusel 1: anuncios de Meta en un anillo 3D -->
@@ -221,9 +205,14 @@ const founderTags = ['FundadorDeHackDental', 'MarketingDental', 'SoloClínicasDe
 
     <!-- Texto largo que se revela (y se subraya) con el scroll -->
     <div class="reveal-text container" data-wordreveal>
-      <p>Nos das la web de tu clínica y tu número de WhatsApp. <mark class="hl">Eso es casi todo lo que tienes que hacer.</mark></p>
-      <p>HackDental estudia cómo captas pacientes hoy y <mark class="hl">diseña tu plan de crecimiento</mark>: qué mejorar, qué priorizar y qué hacer primero.</p>
-      <p>Tus anuncios salen en <span class="inline-ico is-meta"><svg class="icon-brand"><use href="#i-meta"/></svg></span> Meta y <span class="inline-ico is-google"><svg class="icon-brand"><use href="#i-google"/></svg></span> Google, para que empieces a <mark class="hl">convertir clics en pacientes</mark>.</p>
+      <h2>Eres dueño de una clínica dental, pero <mark class="hl">no gana lo que debería.</mark></h2>
+      <p>No es porque tus tratamientos sean malos. <span class="inline-ico is-point"><svg class="icon"><use href="#i-arrow"/></svg></span> Es porque <mark class="hl">no sabes conseguir pacientes online.</mark></p>
+      <p>Quieres abrir tu <mark class="hl">segunda clínica,</mark> pero la primera <mark class="hl">apenas es rentable.</mark></p>
+      <p>Facturas <mark class="hl">10.000&nbsp;€ al mes,</mark> cuando una clínica como la tuya <mark class="hl">debería estar en 30.000&nbsp;€ o más.</mark></p>
+      <p><span class="inline-ico is-check"><svg class="icon"><use href="#i-check"/></svg></span> Tus tratamientos son buenos. <span class="inline-ico is-check"><svg class="icon"><use href="#i-check"/></svg></span> Tu equipo es bueno. <mark class="hl">Pero eso ya no es suficiente en 2026.</mark></p>
+      <p>Hazte la siguiente pregunta: <span class="inline-ico is-point"><svg class="icon"><use href="#i-arrow"/></svg></span> <mark class="hl">¿Cómo vas a abrir tres clínicas si no sabes llenar una?</mark></p>
+      <p>Ahí entra HackDental. Nos das la web de tu clínica y tu número de WhatsApp. <mark class="hl">Eso es casi todo lo que tienes que hacer.</mark></p>
+      <p>Estudiamos cómo captas pacientes hoy, <mark class="hl">diseñamos tu plan de crecimiento</mark> y tus anuncios salen en <span class="inline-ico is-meta"><svg class="icon-brand"><use href="#i-meta"/></svg></span> Meta y <span class="inline-ico is-google"><svg class="icon-brand"><use href="#i-google"/></svg></span> Google para <mark class="hl">convertir clics en pacientes.</mark></p>
     </div>
 
     <!-- Pestañas: qué revisa la auditoría -->
