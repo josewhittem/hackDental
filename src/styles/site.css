@@ -805,7 +805,7 @@ ul { padding: 0; list-style: none; }
 .fchip { position: absolute; display: inline-flex; align-items: center; gap: 6px; }
 .fchip span { padding: 6px 12px; border-radius: 99px; font-size: 13px; font-weight: 700; color: #fff; }
 .fchip .cursor { position: static; width: 20px; height: 24px; }
-.fchip-1 { left: 12%; top: 170px; } .fchip-2 { right: 12%; top: 210px; } .fchip-3 { left: 13%; top: 430px; } .fchip-4 { right: 13%; top: 400px; }
+.fchip-1 { left: -26%; top: 150px; } .fchip-2 { right: -24%; top: 200px; } .fchip-3 { left: -24%; top: 420px; } .fchip-4 { right: -26%; top: 380px; }
 .fchip-1 span { background: var(--pink); } .fchip-2 span { background: var(--lilac); color: #0f4a37; } .fchip-3 span { background: var(--mint); color: #1f6b3a; } .fchip-4 span { background: var(--blue); }
 .final-mascot { position: absolute; left: 50%; bottom: -70px; translate: -50% 0; width: 270px; z-index: 1; pointer-events: none; animation: peek 1.2s var(--ease-out) both; }
 
@@ -1052,4 +1052,190 @@ ul { padding: 0; list-style: none; }
   .hero-note { margin-top: 18px; }
   .hero-eyebrow { font-size: 11px; letter-spacing: 0.1em; }
   .product-wrap { margin-top: 104px; }
+}
+
+/* ==========================================================================
+   AJUSTES HACKDENTAL v2: teléfono en la cabecera, hero con el fundador,
+   carruseles de anuncios, subrayados tipo marcador y sección del fundador
+   ========================================================================== */
+.icon-brand { width: 1em; height: 1em; flex-shrink: 0; }
+
+/* --- Cabecera: WhatsApp / teléfono --- */
+.nav-right { display: flex; align-items: center; gap: 8px; }
+.nav-phone { gap: 10px; padding: 0 16px 0 12px; color: var(--ink); white-space: nowrap; transition: transform 0.2s var(--ease-out), box-shadow 0.2s; }
+.nav-phone:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0, 64, 46, 0.12); }
+.nav-phone .icon-brand { width: 22px; height: 22px; color: #25d366; }
+.nav-phone-text { display: flex; flex-direction: column; line-height: 1.1; }
+.nav-phone-text b { font-size: 14px; letter-spacing: 0.01em; }
+.nav-phone-text small { font-size: 10.5px; font-weight: 600; color: var(--ash); }
+
+/* --- Botón secundario de WhatsApp --- */
+.btn-wa { display: inline-flex; align-items: center; gap: 12px; padding: 8px 22px 8px 12px; border-radius: var(--r-pill); background: #fff; border: 1px solid var(--hairline); color: var(--ink); box-shadow: var(--shadow-ui); white-space: nowrap; transition: transform 0.2s var(--ease-out), box-shadow 0.2s; }
+.btn-wa:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(0, 64, 46, 0.14); }
+.btn-wa .icon-brand { width: 30px; height: 30px; color: #25d366; }
+.btn-wa span { display: flex; flex-direction: column; line-height: 1.15; text-align: left; }
+.btn-wa small { font-size: 11px; font-weight: 600; color: var(--ash); }
+.btn-wa b { font-size: 15px; }
+
+/* --- Subrayado tipo marcador --- */
+.hl {
+  background-color: transparent;
+  background-image: linear-gradient(120deg, #c9f2de, #b2ead0);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  background-position: 0 0;
+  padding: 0.05em 0.2em;
+  margin: 0 -0.08em;
+  border-radius: 0.3em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  color: inherit;
+  transition: background-size 0.8s var(--ease-out);
+}
+.hl.is-on { background-size: 100% 100%; }
+.hl .w { color: #8fb9a6; }
+.hl .w.is-on { color: #06382a; }
+.hero-copy .micro-trust { margin-top: 24px; }
+.hero-copy .hl, .final .hl { animation: hl-draw 0.9s 0.5s var(--ease-out) both; color: var(--ink); font-weight: 600; }
+@keyframes hl-draw { from { background-size: 0% 100%; } to { background-size: 100% 100%; } }
+.inline-ico .icon-brand { width: 0.62em; height: 0.62em; }
+.inline-ico { transform: scale(0.85); opacity: 0.55; transition: transform 0.5s var(--ease-out), opacity 0.5s; }
+.inline-ico.is-on { transform: scale(1); opacity: 1; }
+.inline-ico.is-meta { background: #e8f0ff; }
+.inline-ico.is-google { background: #fff; box-shadow: inset 0 0 0 1px var(--frost); }
+
+/* --- Hero: copy + fundador --- */
+.hero-copy { display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; }
+.hero-copy .hero-sub { max-width: 640px; }
+.hero .hero-cta { gap: 16px; }
+.hero-founder { position: relative; width: 100%; max-width: 520px; margin-top: 44px; }
+.founder-stage { position: relative; width: 100%; aspect-ratio: 1 / 1.04; }
+.founder-bg { position: absolute; left: 9%; right: 9%; top: 10%; bottom: 0; border-radius: 40px 40px 32px 32px; background: linear-gradient(165deg, #edf8f2 0%, #cfeee0 55%, #b4e4cd 100%); box-shadow: var(--shadow-soft); overflow: hidden; }
+.founder-bg::after { content: ""; position: absolute; left: 50%; top: 45%; width: 70%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; background: radial-gradient(closest-side, rgba(0, 128, 96, 0.22), transparent); }
+.founder-cutout { position: absolute; left: 50%; bottom: 0; translate: -50% 0; width: 70%; height: auto; max-height: 100%; object-fit: contain; object-position: bottom; filter: drop-shadow(0 26px 30px rgba(0, 40, 28, 0.28)); }
+.ftag { position: absolute; z-index: 2; display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: var(--r-pill); background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(16, 17, 26, 0.14); font-size: 13px; font-weight: 700; color: var(--ink); white-space: nowrap; animation: float 6s ease-in-out infinite; }
+.ftag .icon { width: 15px; height: 15px; stroke-width: 2.2; color: var(--pink); }
+.ftag b { display: block; font-size: 14px; line-height: 1.15; }
+.ftag small { display: block; font-size: 11px; font-weight: 600; color: var(--ash); }
+.ftag.t-1 { left: 0; top: 20%; flex-direction: column; align-items: flex-start; gap: 1px; padding: 10px 16px; border-radius: 16px; animation-delay: -1s; }
+.ftag.t-2 { right: -2%; top: 31%; animation-delay: -2.5s; }
+.ftag.t-3 { left: 1%; top: 58%; animation-delay: -4s; }
+.ftag.t-4 { right: 5%; top: 45%; animation-delay: -5.5s; }
+.flag-es { width: 16px; height: 12px; border-radius: 2px; background: linear-gradient(#c60b1e 25%, #ffc400 25% 75%, #c60b1e 75%); box-shadow: inset 0 0 0 1px rgba(31, 32, 40, 0.12); }
+.wa-card { position: absolute; z-index: 2; right: -4%; bottom: 5%; width: 236px; padding: 10px; border-radius: 16px; background: #fff; border: 1px solid var(--card-border); box-shadow: 0 18px 40px rgba(16, 17, 26, 0.16); font-size: 12px; color: var(--ink); animation: float 7s ease-in-out infinite; animation-delay: -3s; }
+.wa-head { display: flex; align-items: center; gap: 6px; padding: 2px 4px 8px; font-size: 11px; font-weight: 700; color: var(--ash); }
+.wa-head .icon-brand { width: 14px; height: 14px; color: #25d366; }
+.wa-msg { position: relative; margin-top: 6px; padding: 8px 10px 16px; border-radius: 10px; line-height: 1.35; }
+.wa-msg.in { background: var(--ice); border-top-left-radius: 2px; margin-right: 18px; }
+.wa-msg.out { background: #d9fdd3; border-top-right-radius: 2px; margin-left: 18px; }
+.wa-msg small { position: absolute; right: 8px; bottom: 4px; font-size: 9px; color: var(--mist); }
+
+@media (min-width: 1025px) {
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr); gap: 24px 48px; align-items: center; text-align: left; }
+  .hero-copy { align-items: flex-start; text-align: left; }
+  .hero-copy .t-hero { font-size: clamp(44px, 1.5rem + 2.7vw, 70px); }
+  .hero .hero-cta { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 14px 16px; max-width: none; }
+  .hero-copy .micro-trust { justify-content: flex-start; }
+  .hero-founder { margin-top: 0; justify-self: end; }
+  .hero-mascot { display: none; }
+}
+
+/* --- Carrusel 1: anillo 3D de anuncios de Meta --- */
+.belt-label { position: relative; z-index: 3; display: flex; align-items: center; justify-content: center; gap: 8px; margin: 0 auto; padding: 0 16px; font-size: 13px; font-weight: 700; letter-spacing: 0.01em; color: var(--ash); text-align: center; }
+.belt-label .icon-brand { width: 18px; height: 18px; }
+.orbit-belt { --card-w: 240px; --card-h: 350px; --r: 460px; position: relative; margin-top: 88px; height: 560px; perspective: 2000px; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.orbit-ring { position: absolute; left: 50%; top: 50%; width: var(--card-w); height: var(--card-h); margin: calc(var(--card-h) / -2 + 16px) 0 0 calc(var(--card-w) / -2); transform-style: preserve-3d; animation: orbit-spin 72s linear infinite; }
+.orbit-belt:hover .orbit-ring { animation-play-state: paused; }
+.orbit-ring .ad-card { position: absolute; inset: 0; transform: rotateY(calc(var(--i) * 360deg / var(--n))) translateZ(var(--r)); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+@keyframes orbit-spin { from { transform: rotateY(0deg); } to { transform: rotateY(-360deg); } }
+
+/* Tarjeta de anuncio de Meta */
+.ad-card { display: flex; flex-direction: column; background: #fff; border-radius: 16px; border: 1px solid var(--card-border); box-shadow: 0 14px 36px rgba(16, 17, 26, 0.14); overflow: hidden; color: var(--ink); font-size: 11px; }
+.ad-head { display: flex; align-items: center; gap: 8px; padding: 10px 12px 8px; }
+.ad-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--gradient-cta); color: #fff; font-size: 10px; font-weight: 800; letter-spacing: 0.02em; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ad-head b { display: block; font-size: 12px; line-height: 1.2; }
+.ad-head small { display: flex; align-items: center; gap: 3px; font-size: 10px; color: var(--ash); }
+.ad-head .more { margin-left: auto; color: var(--ash); font-weight: 700; letter-spacing: 1px; }
+.ad-text { padding: 0 12px 10px; font-size: 11.5px; line-height: 1.4; color: var(--ink-3); }
+.ad-img { width: 100%; height: 148px; object-fit: cover; }
+.ad-cta { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; background: var(--ice); }
+.ad-cta small { display: block; font-size: 9.5px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ash); }
+.ad-cta b { display: block; font-size: 11.5px; }
+.ad-btn { flex-shrink: 0; padding: 6px 10px; border-radius: 6px; background: #e4e6eb; font-size: 11px; font-weight: 700; }
+.ad-acts { display: flex; gap: 14px; padding: 8px 12px 10px; color: var(--ink); }
+.ad-acts .icon { width: 16px; height: 16px; }
+.ad-acts .save { margin-left: auto; }
+
+/* --- Carrusel 2: anuncios y fichas de Google --- */
+.belt-google { margin-top: 96px; perspective: none; }
+.belt-google .belt-label { margin-bottom: 22px; }
+.belt-track--reverse { animation-direction: reverse; }
+.gad { width: 330px; flex-shrink: 0; padding: 16px 18px; background: #fff; border-radius: 16px; border: 1px solid var(--card-border); box-shadow: var(--shadow-ui); color: var(--ink); font-size: 12px; }
+.gad-top { font-size: 11px; font-weight: 800; }
+.gad-src { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.gad-fav { width: 26px; height: 26px; border-radius: 50%; background: var(--ice); border: 1px solid var(--frost); display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: var(--pink); flex-shrink: 0; }
+.gad-src b { display: block; font-size: 12px; }
+.gad-src small { display: block; font-size: 10.5px; color: var(--ash); }
+.gad-title { margin-top: 8px; font-size: 15px; font-weight: 600; line-height: 1.3; color: #1a0dab; }
+.gad-desc { margin-top: 4px; font-size: 12px; line-height: 1.45; color: var(--ink-3); }
+.gad-links { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 8px; font-size: 12px; color: #1a0dab; }
+.gbp { width: 300px; flex-shrink: 0; background: #fff; border-radius: 16px; border: 1px solid var(--card-border); box-shadow: var(--shadow-ui); overflow: hidden; color: var(--ink); font-size: 12px; }
+.gbp img { width: 100%; height: 118px; object-fit: cover; }
+.gbp-body { padding: 12px 16px 14px; }
+.gbp-body b { display: block; font-size: 15px; }
+.gbp-stars { display: flex; align-items: center; gap: 3px; margin-top: 4px; font-size: 12px; color: var(--ink-3); }
+.gbp-stars .icon-brand { width: 13px; height: 13px; color: #fbbc04; }
+.gbp-body small { display: block; margin-top: 4px; font-size: 11.5px; color: var(--ash); }
+.gbp-acts { display: flex; gap: 8px; margin-top: 10px; }
+.gbp-acts span { padding: 5px 10px; border-radius: 99px; border: 1px solid var(--frost); font-size: 11px; font-weight: 600; color: #1a73e8; }
+
+/* --- Sección del fundador (foto + etiquetas) --- */
+.founder { padding-block: 112px 64px; }
+.book > .founder { order: 150; }
+.founder-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px 72px; align-items: center; }
+.founder .eyebrow { margin-bottom: 14px; }
+.longtext { margin-top: 28px; display: flex; flex-direction: column; gap: 22px; }
+.longtext p { font-size: clamp(21px, 1.05rem + 0.8vw, 28px); line-height: 1.4; font-weight: 700; letter-spacing: -0.012em; color: var(--pebble); }
+.longtext .w { transition: color 0.35s; }
+.longtext .w.is-on { color: var(--ink); }
+.founder-actions { margin-top: 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 16px; }
+.founder-photo-wrap { position: relative; width: 100%; max-width: 520px; margin-inline: auto; }
+.founder-photo { display: block; width: 100%; height: auto; border-radius: 28px; box-shadow: var(--shadow-soft); }
+.hashtags { position: absolute; right: -10%; top: 40%; width: 66%; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
+.hashtag { padding: 11px 18px; border-radius: var(--r-pill); background: rgba(255, 255, 255, 0.96); box-shadow: 0 10px 28px rgba(16, 17, 26, 0.14); font-size: 14px; font-weight: 700; color: var(--pink); white-space: nowrap; animation: float 7s ease-in-out infinite; animation-delay: calc(var(--d, 0s) * -1); }
+
+/* --- CTA final y pie --- */
+.final .lead { margin: 16px auto 0; max-width: 560px; color: var(--ink-2); }
+.final-actions { margin-top: 32px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.final .final-actions .cta { margin-top: 0; }
+.footer .wpp .icon-brand { width: 18px; height: 18px; color: #25d366; }
+.footer .phone-line { margin-top: 12px; font-size: 14px; color: var(--ink-2); }
+.footer .phone-line a { font-weight: 700; color: var(--ink); }
+
+@media (max-width: 1024px) {
+  .founder-grid { grid-template-columns: 1fr; }
+  .founder-photo-wrap { max-width: 460px; }
+  .hashtags { position: static; width: auto; margin-top: 16px; justify-content: center; }
+}
+@media (max-width: 720px) {
+  .nav-phone { padding: 0 11px; }
+  .nav-phone-text { display: none; }
+  .hero .hero-cta { gap: 14px; }
+  .btn-wa { padding: 6px 16px 6px 10px; }
+  .btn-wa .icon-brand { width: 26px; height: 26px; }
+  .hero-founder { margin-top: 32px; max-width: 420px; }
+  .ftag { font-size: 11.5px; padding: 7px 11px; }
+  .ftag.t-1 { padding: 8px 12px; }
+  .ftag b { font-size: 12.5px; }
+  .ftag small { font-size: 10px; }
+  .wa-card { width: 196px; font-size: 11px; right: -2%; bottom: 2%; }
+  .ftag.t-4 { right: auto; left: 2%; top: 41%; }
+  .orbit-belt { --card-w: 196px; --card-h: 300px; --r: 340px; height: 420px; perspective: 1200px; margin-top: 56px; }
+  .ad-img { height: 118px; }
+  .belt-google { margin-top: 64px; }
+  .gad { width: 280px; padding: 14px 16px; }
+  .gbp { width: 250px; }
+  .founder { padding-block: 64px 32px; }
+  .hashtag { font-size: 12px; padding: 8px 12px; animation: none; }
+  .final-actions { margin-top: 24px; }
 }

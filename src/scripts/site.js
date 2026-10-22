@@ -38,28 +38,37 @@
   }
 
   /* ---------- Palabras que se encienden con el scroll ---------- */
+  /* También encienden los subrayados (<mark class="hl">) y los iconos inline que van dentro. */
   const wordBlocks = $$('[data-wordreveal]');
   const words = [];
+  const lit = [];
+  function splitWords(el) {
+    const nodes = Array.from(el.childNodes);
+    el.innerHTML = '';
+    nodes.forEach(n => {
+      if (n.nodeType === 3) {
+        n.textContent.split(/(\s+)/).forEach(t => {
+          if (!t) return;
+          if (/^\s+$/.test(t)) { el.appendChild(document.createTextNode(t)); return; }
+          const s = document.createElement('span'); s.className = 'w'; s.textContent = t; el.appendChild(s); words.push(s);
+        });
+      } else {
+        if (n.tagName === 'MARK') { splitWords(n); lit.push(n); }
+        else if (n.classList && n.classList.contains('inline-ico')) lit.push(n);
+        el.appendChild(n);
+      }
+    });
+  }
   wordBlocks.forEach(block => {
     const targets = block.tagName === 'H2' ? [block] : $$('p', block);
-    targets.forEach(p => {
-      const nodes = Array.from(p.childNodes);
-      p.innerHTML = '';
-      nodes.forEach(n => {
-        if (n.nodeType === 3) {
-          n.textContent.split(/(\s+)/).forEach(t => {
-            if (!t) return;
-            if (/^\s+$/.test(t)) { p.appendChild(document.createTextNode(t)); return; }
-            const s = document.createElement('span'); s.className = 'w'; s.textContent = t; p.appendChild(s); words.push(s);
-          });
-        } else { p.appendChild(n); }
-      });
-    });
+    targets.forEach(splitWords);
   });
   function paintWords() {
-    if (!words.length) return;
+    if (!words.length && !lit.length) return;
     const line = window.innerHeight * 0.62;
-    words.forEach(w => { const r = w.getBoundingClientRect(); w.classList.toggle('is-on', r.top + r.height * 0.5 < line); });
+    const isOn = el => { const r = el.getBoundingClientRect(); return r.top + Math.min(r.height, 40) * 0.5 < line; };
+    words.forEach(w => w.classList.toggle('is-on', isOn(w)));
+    lit.forEach(el => el.classList.toggle('is-on', isOn(el)));
   }
   paintWords();
   window.addEventListener('scroll', paintWords, { passive: true });

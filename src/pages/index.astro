@@ -6,6 +6,7 @@ import IconSprite from '../components/Site/IconSprite.astro';
 import CtaButton from '../components/Site/CtaButton.astro';
 import { Image } from 'astro:assets';
 import founder from '../assets/Ebook/author.webp';
+import joseCutout from '../assets/jose-cutout.webp';
 
 const img = (name: string) => `/site/${name}`;
 
@@ -79,7 +80,40 @@ const faqs = [
 ];
 
 const ctaItems = ['Gratis', 'Reunión 1:1', 'Respuesta en 24 h'];
-const whatsapp = 'https://wa.me/51903300422?text=Hola,%20me%20interesa%20la%20auditor%C3%ADa%20de%20marketing%20dental';
+// Teléfono / WhatsApp de HackDental (el mismo que aparece en /contacto).
+const phone = {
+  display: '+51 903 300 422',
+  tel: 'tel:+51903300422',
+  wa: 'https://wa.me/51903300422?text=Hola%20Jose,%20tengo%20una%20cl%C3%ADnica%20dental%20y%20quiero%20aplicar%20a%20la%20auditor%C3%ADa',
+};
+
+// Ejemplos ficticios del tipo de anuncios que se crean para una clínica dental (no son clientes reales).
+const metaAds = [
+  { img: 'implant-model.jpg', brand: 'Clínica Dental Sonrisa', ini: 'CS', text: '¿Te faltan dientes y evitas sonreír? Implantes con cirugía guiada y corona el mismo día.', offer: 'Primera visita gratis', btn: 'Reservar' },
+  { img: 'aligner.jpg', brand: 'Ortodoncia Vega', ini: 'OV', text: 'Alinea tu sonrisa sin brackets. Alineadores invisibles con escáner 3D en la primera visita.', offer: 'Estudio 3D sin coste', btn: 'Pedir cita' },
+  { img: 'patient-smile.jpg', brand: 'Clínica Dental Sonrisa', ini: 'CS', text: 'Blanqueamiento LED en una sola sesión. Hasta 3 tonos más blanco, sin sensibilidad.', offer: 'Plazas limitadas este mes', btn: 'Más información' },
+  { img: 'kid.jpg', brand: 'Dental Familia', ini: 'DF', text: 'Primera visita infantil sin miedo. Pensada para que tus hijos quieran volver.', offer: 'Revisión infantil gratis', btn: 'Reservar' },
+  { img: 'friends.jpg', brand: 'Estética Dental Norte', ini: 'EN', text: 'Carillas de porcelana diseñadas contigo. Ves tu sonrisa en 3D antes de empezar.', offer: 'Diseño de sonrisa digital', btn: 'Pedir cita' },
+  { img: 'doctor-pink.jpg', brand: 'Dra. Gil · Odontóloga', ini: 'DG', text: 'Hola, soy la Dra. Gil. En mi clínica te explico tu tratamiento con calma y sin letra pequeña.', offer: 'Consulta por WhatsApp', btn: 'Enviar mensaje' },
+  { img: 'brushes.jpg', brand: 'Clínica Dental Sonrisa', ini: 'CS', text: '¿Hace más de 6 meses de tu última limpieza? Reserva tu higiene en un minuto.', offer: 'Pacientes que vuelven', btn: 'Reservar' },
+  { img: 'scan-tablet.jpg', brand: 'Dental Familia', ini: 'DF', text: 'Diagnóstico con escáner 3D en la primera visita y presupuesto cerrado el mismo día.', offer: 'Sin sorpresas', btn: 'Más información' },
+];
+
+const googleAds = [
+  { title: 'Implantes dentales en Madrid | Primera visita gratis', brand: 'Clínica Dental Sonrisa', url: 'www.clinicasonrisa.es › implantes', desc: 'Cirugía guiada y corona el mismo día. Financiación sin intereses. Pide tu cita hoy.', links: ['Pedir cita', 'Precios', 'Opiniones'] },
+  { title: 'Ortodoncia invisible en Valencia | Estudio 3D sin coste', brand: 'Ortodoncia Vega', url: 'www.ortodonciavega.es › invisible', desc: 'Alineadores a medida y revisiones cada 6 semanas. Ve tu resultado antes de empezar.', links: ['Reservar', 'Casos', 'Financiación'] },
+  { title: 'Dentista en Sevilla | Urgencias el mismo día', brand: 'Dental Familia', url: 'www.dentalfamilia.es › urgencias', desc: 'Te damos hueco en menos de 2 horas. Diagnóstico, radiografía y alivio del dolor.', links: ['Llamar ahora', 'Cómo llegar', 'Horario'] },
+  { title: 'Blanqueamiento dental en Bilbao | Una sola sesión', brand: 'Clínica Dental Sonrisa', url: 'www.clinicasonrisa.es › blanqueamiento', desc: 'Hasta 3 tonos más blanco en 60 minutos. Sin sensibilidad. Plazas limitadas.', links: ['Pedir cita', 'Antes y después', 'Precio'] },
+  { title: 'Carillas de porcelana en Málaga | Diseño de sonrisa', brand: 'Estética Dental Norte', url: 'www.esteticanorte.es › carillas', desc: 'Diseñamos tu sonrisa contigo en 3D. Lo ves, lo apruebas y lo hacemos.', links: ['Reservar', 'Casos reales', 'Opiniones'] },
+  { title: 'Dentista infantil en Zaragoza | Revisión gratis', brand: 'Dental Familia', url: 'www.dentalfamilia.es › infantil', desc: 'Primera visita pensada para quitar el miedo. Pide cita en un minuto.', links: ['Pedir cita', 'Equipo', 'Cómo llegar'] },
+];
+
+const googleProfiles = [
+  { img: 'clinic-room.jpg', name: 'Clínica Dental Sonrisa', rating: '4,9', reviews: '312', meta: 'Dentista · Madrid · Abierto · Cierra a las 20:00' },
+  { img: 'clinic-chair.jpg', name: 'Dental Familia', rating: '4,8', reviews: '187', meta: 'Dentista · Sevilla · Abierto · Cierra a las 21:00' },
+];
+
+const founderTags = ['FundadorDeHackDental', 'MarketingDental', 'SoloClínicasDentales', 'España', 'Reunión1a1', 'PlazasLimitadas', 'MásPacientes', 'MejoresTratamientos', 'SinAgenciaGenérica'];
 ---
 
 <SiteLayout>
@@ -95,10 +129,16 @@ const whatsapp = 'https://wa.me/51903300422?text=Hola,%20me%20interesa%20la%20au
     <nav class="glass-pill nav-center" aria-label="Principal">
       <a href="#metodo">Método</a>
       <a href="#servicios">Servicios</a>
-      <a href="#como-funciona">Cómo aplicar</a>
+      <a href="#fundador">Fundador</a>
       <a href="#faq">Preguntas</a>
     </nav>
-    <CtaButton size="sm" text="Auditoría gratis" />
+    <div class="nav-right">
+      <a class="glass-pill nav-phone" href={phone.wa} target="_blank" rel="noopener" aria-label={`Escríbenos por WhatsApp al ${phone.display}`}>
+        <svg class="icon-brand"><use href="#i-wa"/></svg>
+        <span class="nav-phone-text"><b>{phone.display}</b><small>Escríbenos por WhatsApp</small></span>
+      </a>
+      <CtaButton size="sm" text="Auditoría gratis" />
+    </div>
   </div>
 </header>
 
@@ -111,31 +151,79 @@ const whatsapp = 'https://wa.me/51903300422?text=Hola,%20me%20interesa%20la%20au
     <span class="orbit orbit-3" aria-hidden="true"></span>
     <span class="orbit orbit-4" aria-hidden="true"></span>
 
-    <div class="hero-head container">
+    <div class="hero-head container hero-grid">
       <div class="fan" id="fan" aria-hidden="true">
         {fanCards.map(([file, label]) => (
           <div class="fan-card"><img src={img(file)} alt=""><span>{label}</span></div>
         ))}
       </div>
-      <span class="trust-pill">
-        <span class="avatars">
-          <img src={img('doctor-phone.jpg')} alt="">
-          <img src={img('doctor-teal.jpg')} alt="">
-          <img src={img('doctor-pink.jpg')} alt="">
+
+      <div class="hero-copy">
+        <span class="trust-pill">
+          <span class="avatars">
+            <img src={img('doctor-phone.jpg')} alt="">
+            <img src={img('doctor-teal.jpg')} alt="">
+            <img src={img('doctor-pink.jpg')} alt="">
+          </span>
+          <span>Marketing <b>solo</b> para clínicas dentales en <b>España</b></span>
         </span>
-        <span>Especialistas <b>solo</b> en clínicas dentales</span>
-      </span>
 
-      <p class="hero-eyebrow"><svg class="icon"><use href="#i-tooth"/></svg> Para dueños de clínicas dentales en España</p>
-      <h1 class="t-hero">Somos una <span class="grad-text">Agencia de Marketing Dental</span></h1>
-      <p class="hero-sub t-body">Ayudamos a clínicas dentales a conseguir más pacientes y mejores tratamientos. Empieza con una auditoría de marketing gratuita.</p>
+        <p class="hero-eyebrow"><svg class="icon"><use href="#i-tooth"/></svg> Para dueños de clínicas dentales</p>
+        <h1 class="t-hero">Somos una <span class="grad-text">Agencia de Marketing Dental</span></h1>
+        <p class="hero-sub t-body">Ayudamos a clínicas dentales a conseguir más pacientes y mejores tratamientos. <mark class="hl is-on">Jose Whittembury, el fundador, trabaja directamente con un número limitado de clínicas.</mark></p>
 
-      <div class="hero-cta">
-        <CtaButton size="lg" bounce text="Quiero más pacientes" items={ctaItems} />
-        <p class="hero-note founder-note"><Image src={founder} alt="" width={24} height={24} densities={[1, 2]} /> <span>Reunión 1:1 con <b>Jose Whittembury</b>, fundador. Sin compromiso.</span></p>
+        <div class="hero-cta">
+          <CtaButton size="lg" bounce text="Quiero más pacientes" items={ctaItems} />
+          <a class="btn-wa" href={phone.wa} target="_blank" rel="noopener">
+            <svg class="icon-brand"><use href="#i-wa"/></svg>
+            <span><small>Escríbenos por WhatsApp</small><b>{phone.display}</b></span>
+          </a>
+        </div>
+        <ul class="micro-trust">
+          <li><svg class="icon"><use href="#i-badge"/></svg> Auditoría gratis</li>
+          <li><svg class="icon"><use href="#i-user"/></svg> Reunión 1:1 con el fundador</li>
+          <li><svg class="icon"><use href="#i-clock"/></svg> Respuesta en 24 h</li>
+        </ul>
       </div>
 
-      <svg class="mascot hero-mascot" aria-hidden="true"><use href="#mascot"/></svg>
+      <div class="hero-founder">
+        <div class="founder-stage">
+          <span class="founder-bg" aria-hidden="true"></span>
+          <Image src={joseCutout} alt="Jose Whittembury, fundador de HackDental" class="founder-cutout" widths={[420, 640, 900]} sizes="(max-width: 720px) 62vw, 380px" loading="eager" />
+          <span class="ftag t-1"><b>Jose Whittembury</b><small>Fundador de HackDental</small></span>
+          <span class="ftag t-2"><svg class="icon"><use href="#i-user"/></svg> Trabaja directamente contigo</span>
+          <span class="ftag t-3"><span class="flag-es" aria-hidden="true"></span> Solo clínicas en España</span>
+          <span class="ftag t-4"><svg class="icon"><use href="#i-zap"/></svg> Plazas limitadas</span>
+          <div class="wa-card" aria-hidden="true">
+            <div class="wa-head"><svg class="icon-brand"><use href="#i-wa"/></svg> WhatsApp · HackDental</div>
+            <div class="wa-msg in">Hola Jose, tengo una clínica en Madrid y quiero más pacientes 🦷<small>10:41</small></div>
+            <div class="wa-msg out">¡Genial! Hoy mismo te escribo y agendamos tu auditoría ✅<small>10:42 ✓✓</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carrusel 1: anuncios de Meta en un anillo 3D -->
+    <div class="orbit-belt" aria-label="Ejemplos del tipo de anuncios de Meta que creamos para clínicas dentales">
+      <p class="belt-label"><svg class="icon-brand"><use href="#i-meta"/></svg> Así se ven los anuncios que creamos para clínicas dentales</p>
+      <div class="orbit-ring" style={`--n:${metaAds.length}`}>
+        {metaAds.map((ad, i) => (
+          <article class="ad-card" style={`--i:${i}`}>
+            <header class="ad-head"><span class="ad-avatar">{ad.ini}</span><div><b>{ad.brand}</b><small>Patrocinado · <svg class="icon" style="width:9px;height:9px"><use href="#i-globe"/></svg></small></div><span class="more">···</span></header>
+            <p class="ad-text">{ad.text}</p>
+            <img class="ad-img" src={img(ad.img)} alt="" loading="lazy">
+            <div class="ad-cta"><div><small>tuclinica.es</small><b>{ad.offer}</b></div><span class="ad-btn">{ad.btn}</span></div>
+            <div class="ad-acts"><svg class="icon"><use href="#i-heart"/></svg><svg class="icon"><use href="#i-chat"/></svg><svg class="icon"><use href="#i-send"/></svg><svg class="icon save"><use href="#i-bookmark"/></svg></div>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <!-- Texto largo que se revela (y se subraya) con el scroll -->
+    <div class="reveal-text container" data-wordreveal>
+      <p>Nos das la web de tu clínica y tu número de WhatsApp. <mark class="hl">Eso es casi todo lo que tienes que hacer.</mark></p>
+      <p>HackDental estudia cómo captas pacientes hoy y <mark class="hl">diseña tu plan de crecimiento</mark>: qué mejorar, qué priorizar y qué hacer primero.</p>
+      <p>Tus anuncios salen en <span class="inline-ico is-meta"><svg class="icon-brand"><use href="#i-meta"/></svg></span> Meta y <span class="inline-ico is-google"><svg class="icon-brand"><use href="#i-google"/></svg></span> Google, para que empieces a <mark class="hl">convertir clics en pacientes</mark>.</p>
     </div>
 
     <!-- Pestañas: qué revisa la auditoría -->
@@ -261,26 +349,35 @@ const whatsapp = 'https://wa.me/51903300422?text=Hola,%20me%20interesa%20la%20au
     </div>
     </div>
 
-    <!-- Texto que se revela con el scroll -->
-    <div class="reveal-text container" data-wordreveal>
-      <p>Tus tratamientos son buenos. Tu equipo es bueno. Pero eso no es suficiente en 2026.</p>
-      <p>Hoy no gana la mejor clínica: gana la que tiene una estrategia de marketing rentable.</p>
-      <p>HackDental la diseña contigo para traer <span class="inline-ico" style="background:#dcf0e9;color:#0e8f7e"><svg class="icon"><use href="#i-user"/></svg></span> más pacientes y <span class="inline-ico" style="background:#d6eee3;color:#008060"><svg class="icon"><use href="#i-implant"/></svg></span> mejores tratamientos a tu clínica.</p>
-    </div>
-
-    <!-- Cinta de ejemplos de anuncios -->
-    <div class="belt" aria-label="Ejemplos de campañas para clínicas dentales">
-      <div class="belt-track" id="belt">
-        {[...adExamples, ...adExamples].map(([file, title, text], i) => (
-          <article class="case" aria-hidden={i >= adExamples.length ? 'true' : undefined}>
-            <div class="case-head"><span class="avatars"><span style="background:#008060"><svg class="icon" style="width:12px;height:12px;color:#fff"><use href="#logo"/></svg></span></span><div><b>tuclinica.dental</b><small>Publicidad · ejemplo</small></div><span class="more">···</span></div>
-            <img src={img(file)} alt="" loading="lazy">
-            <div class="case-foot">
-              <div class="acts"><svg class="icon"><use href="#i-heart"/></svg><svg class="icon"><use href="#i-chat"/></svg><svg class="icon"><use href="#i-send"/></svg><svg class="icon save"><use href="#i-bookmark"/></svg></div>
-              <b>Pide tu primera visita</b>
-              <small><strong>{title}.</strong> {text}</small>
-            </div>
-          </article>
+    <!-- Carrusel 2: anuncios y fichas de Google -->
+    <div class="belt belt-google" aria-label="Ejemplos de anuncios y fichas de Google para clínicas dentales">
+      <p class="belt-label"><svg class="icon-brand"><use href="#i-google"/></svg> Y así apareces cuando buscan dentista en tu zona</p>
+      <div class="belt-track belt-track--reverse">
+        {[0, 1].map((copy) => (
+          <>
+            {googleAds.map((ad, i) => (
+              <>
+                <article class="gad" aria-hidden={copy === 1 ? 'true' : undefined}>
+                  <div class="gad-top">Patrocinado</div>
+                  <div class="gad-src"><span class="gad-fav">{ad.brand[0]}</span><div><b>{ad.brand}</b><small>{ad.url}</small></div></div>
+                  <h4 class="gad-title">{ad.title}</h4>
+                  <p class="gad-desc">{ad.desc}</p>
+                  <div class="gad-links">{ad.links.map((l) => <span>{l}</span>)}</div>
+                </article>
+                {i % 3 === 2 && (
+                  <article class="gbp" aria-hidden={copy === 1 ? 'true' : undefined}>
+                    <img src={img(googleProfiles[(i / 3 | 0) % googleProfiles.length].img)} alt="" loading="lazy">
+                    <div class="gbp-body">
+                      <b>{googleProfiles[(i / 3 | 0) % googleProfiles.length].name}</b>
+                      <div class="gbp-stars">{googleProfiles[(i / 3 | 0) % googleProfiles.length].rating} <svg class="icon-brand"><use href="#i-star-fill"/></svg><svg class="icon-brand"><use href="#i-star-fill"/></svg><svg class="icon-brand"><use href="#i-star-fill"/></svg><svg class="icon-brand"><use href="#i-star-fill"/></svg><svg class="icon-brand"><use href="#i-star-fill"/></svg> ({googleProfiles[(i / 3 | 0) % googleProfiles.length].reviews} reseñas)</div>
+                      <small>{googleProfiles[(i / 3 | 0) % googleProfiles.length].meta}</small>
+                      <div class="gbp-acts"><span>Llamar</span><span>Cómo llegar</span><span>Sitio web</span></div>
+                    </div>
+                  </article>
+                )}
+              </>
+            ))}
+          </>
         ))}
       </div>
     </div>
@@ -685,13 +782,30 @@ No por una agencia genérica.">Marketing dental hecho por expertos.<br><span cla
   </section>
 
   <!-- ===== FUNDADOR ===== -->
-  <section class="team rail" id="fundador">
-    <h2 class="t-h2 reveal">Trabaja directamente con el fundador</h2>
-    <p class="lead reveal d-1">Mi misión es clara: ayudar a clínicas dentales independientes. No me parece justo que odontólogos talentosos sean aplastados por grandes franquicias.</p>
-    <div class="team-grid">
-      <div class="doc soft-card soft-card--24 reveal"><Image src={founder} alt="Retrato de Jose Whittembury" width={72} height={72} densities={[1, 2]} class="is-founder" /><h3>Jose Whittembury</h3><div class="role">Fundador de HackDental</div><p>Especialista en marketing dental. Diagnostica por qué tu clínica no está creciendo y qué está bloqueando tus ventas hoy.</p></div>
-      <div class="doc soft-card soft-card--24 reveal d-1"><span class="icon-box"><svg class="icon"><use href="#i-search"/></svg></span><h3>Tu auditoría</h3><div class="role">Gratis · Reunión 1:1</div><p>Tu web, tu captación de pacientes y dónde estás perdiendo oportunidades, explicado sin tecnicismos.</p></div>
-      <div class="doc soft-card soft-card--24 reveal d-2"><span class="icon-box"><svg class="icon"><use href="#i-layers"/></svg></span><h3>Tu plan</h3><div class="role">Qué hacer primero</div><p>Qué mejorar, qué priorizar y qué acciones tomar para atraer mejores pacientes este 2026.</p></div>
+  <section class="founder rail" id="fundador">
+    <div class="founder-grid">
+      <div class="founder-copy">
+        <p class="eyebrow">Sobre el fundador</p>
+        <h2 class="t-h1">¿Y quién es Jose?</h2>
+        <div class="longtext" data-wordreveal>
+          <p><mark class="hl">Me diferencio de otras agencias porque solo trabajo con clínicas dentales, y lo hago yo directamente, con un número limitado de clínicas en España.</mark></p>
+          <p>Por eso sé dónde se pierden los pacientes de una clínica: en la web, en los anuncios, en Google y en el WhatsApp que nadie responde.</p>
+          <p>Y mientras la mayoría de agencias vende likes, a mí me importa lo que llega a la silla: <mark class="hl">pacientes y tratamientos</mark>.</p>
+        </div>
+        <div class="founder-actions">
+          <CtaButton text="Quiero hablar con Jose" />
+          <a class="btn-wa" href={phone.wa} target="_blank" rel="noopener">
+            <svg class="icon-brand"><use href="#i-wa"/></svg>
+            <span><small>WhatsApp directo</small><b>{phone.display}</b></span>
+          </a>
+        </div>
+      </div>
+      <div class="founder-photo-wrap reveal">
+        <Image src={founder} alt="Jose Whittembury dando una formación a dueños de clínicas dentales" class="founder-photo" widths={[520, 900, 1200]} sizes="(max-width: 1024px) 92vw, 520px" />
+        <ul class="hashtags" aria-label="Sobre Jose">
+          {founderTags.map((t, i) => <li class="hashtag" style={`--d:${(i * 0.7).toFixed(1)}s`}>#{t}</li>)}
+        </ul>
+      </div>
     </div>
     <figure class="quote reveal">
       <blockquote>«En 2026 no gana la mejor clínica. Gana la que tiene una estrategia de marketing rentable.»</blockquote>
@@ -721,8 +835,13 @@ No por una agencia genérica.">Marketing dental hecho por expertos.<br><span cla
     <span class="fchip fchip-3" aria-hidden="true"><svg class="cursor"><use href="#cursor"/></svg><span>Ortodoncia</span></span>
     <span class="fchip fchip-4" aria-hidden="true"><svg class="cursor"><use href="#cursor"/></svg><span>Rentabilidad</span></span>
     <h2 class="t-h2 reveal">Recibe hoy tu auditoría de marketing gratuita.</h2>
-    <div class="hero-cta" style="margin-inline:auto">
-      <CtaButton size="lg" text="Pide tu auditoría gratis" items={ctaItems} class="reveal d-1" />
+    <p class="lead t-body reveal d-1">Solo clínicas dentales en España. <mark class="hl is-on">Jose trabaja directamente con un número limitado de clínicas.</mark></p>
+    <div class="final-actions reveal d-1">
+      <CtaButton size="lg" text="Pide tu auditoría gratis" items={ctaItems} />
+      <a class="btn-wa" href={phone.wa} target="_blank" rel="noopener">
+        <svg class="icon-brand"><use href="#i-wa"/></svg>
+        <span><small>O escríbenos por WhatsApp</small><b>{phone.display}</b></span>
+      </a>
     </div>
     <svg class="mascot final-mascot" aria-hidden="true"><use href="#mascot"/></svg>
   </section>
@@ -736,8 +855,9 @@ No por una agencia genérica.">Marketing dental hecho por expertos.<br><span cla
         <a href="#top" aria-label="HackDental, inicio" class="logo-text">HackDental</a>
         <span class="lang" aria-label="Clínicas en España"><span class="flag"></span>España</span>
       </div>
-      <p class="tagline">Marketing dental para clínicas que<br>quieren crecer en serio.</p>
-      <a class="wpp" href={whatsapp} target="_blank" rel="noopener"><svg class="icon"><use href="#i-chat"/></svg> Consulta por WhatsApp</a>
+      <p class="tagline">Agencia de marketing dental.<br>Solo clínicas dentales, solo en España.</p>
+      <a class="wpp" href={phone.wa} target="_blank" rel="noopener"><svg class="icon-brand"><use href="#i-wa"/></svg> WhatsApp {phone.display}</a>
+      <p class="phone-line">Llámanos: <a href={phone.tel}>{phone.display}</a></p>
     </div>
     <nav aria-label="Legal"><h2>Legal</h2><ul><li><a href="/politicas">Aviso legal</a></li><li><a href="/politicas">Política de privacidad</a></li></ul></nav>
     <nav aria-label="Clínicas"><h2>Clínicas</h2><ul><li><a href="/contacto">Aplicar a la auditoría</a></li><li><a href="/ebook">Ebook gratuito</a></li><li><a href="#faq">Preguntas frecuentes</a></li></ul></nav>
