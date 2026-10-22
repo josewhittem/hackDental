@@ -1,13 +1,759 @@
 ---
-import Hero from '../components/Hero.astro';
-import NuevosPacientes from '../components/NuevosPacientes.astro';
-import PreguntasFrecuentes from '../components/PreguntasFrecuentes.astro';
-import Layout from '../layouts/Layout.astro';
+// Sitio principal de HackDental. Diseño basado en la plantilla Nuvola Dental,
+// con el copy, la paleta verde y los CTA de HackDental.
+import SiteLayout from '../layouts/SiteLayout.astro';
+import IconSprite from '../components/Site/IconSprite.astro';
+import CtaButton from '../components/Site/CtaButton.astro';
+import { Image } from 'astro:assets';
+import founder from '../assets/Ebook/author.webp';
 
+const img = (name: string) => `/site/${name}`;
+
+const fanCards = [
+  ['aligner.jpg', 'Campaña de ortodoncia'],
+  ['patient-smile.jpg', 'Pacientes de estética'],
+  ['kid.jpg', 'Primeras visitas'],
+  ['friends.jpg', 'Reseñas en Google'],
+  ['implant-model.jpg', 'Pacientes de implantes'],
+  ['doctor-pink.jpg', 'Marca del doctor'],
+  ['brushes.jpg', 'Higiene recurrente'],
+  ['scan-tablet.jpg', 'Web que convierte'],
+  ['clinic-room.jpg', 'Clínicas en España'],
+];
+
+// Ejemplos del tipo de anuncios que se trabajan para una clínica (no son resultados de clientes).
+const adExamples = [
+  ['aligner.jpg', 'Ortodoncia invisible', 'Anuncio para adultos que quieren alinear su sonrisa sin brackets.'],
+  ['patient-smile.jpg', 'Blanqueamiento', 'Oferta de entrada que lleva a una primera visita, no a un descuento.'],
+  ['kid.jpg', 'Odontopediatría', 'Campaña para familias de la zona: la puerta a pacientes de por vida.'],
+  ['friends.jpg', 'Carillas', 'Casos de estética que venden calidad en lugar de precio.'],
+  ['implant-model.jpg', 'Implantes', 'Embudo para el tratamiento de mayor valor de tu clínica.'],
+  ['doctor-pink.jpg', 'Marca personal', 'El doctor como cara de la clínica: confianza antes de la cita.'],
+  ['brushes.jpg', 'Revisiones', 'Recordatorios que reactivan a los pacientes que ya tienes.'],
+];
+
+const services = [
+  ['g-1', 'i-search', 'Auditoría de marketing', 'Dónde estás perdiendo pacientes hoy y qué arreglar primero.'],
+  ['g-2', 'i-pin', 'Google Business', 'Ficha optimizada para aparecer cuando buscan dentista en tu zona.'],
+  ['g-3', 'i-target', 'Meta Ads', 'Anuncios en Facebook e Instagram que filtran al paciente correcto.'],
+  ['g-4', 'i-globe', 'Google Ads', 'Presencia en las búsquedas de pacientes con intención real.'],
+  ['g-5', 'i-layers', 'Web para clínicas', 'Una web pensada para convertir visitas en citas, no para decorar.'],
+  ['g-6', 'i-implant', 'Embudos de implantes', 'Captación del tratamiento que más rentabilidad deja.'],
+  ['g-1', 'i-smile', 'Ortodoncia invisible', 'Campañas para un tratamiento largo y de alto valor.'],
+  ['g-2', 'i-star', 'Reseñas', 'Un sistema para que tus pacientes contentos hablen por ti.'],
+  ['g-3', 'i-chat', 'Seguimiento por WhatsApp', 'Que ningún lead se enfríe antes de agendar.'],
+  ['g-4', 'i-spark', 'Contenido para redes', 'Mensajes con estrategia, no publicaciones genéricas.'],
+  ['g-5', 'i-trend', 'Métricas y rentabilidad', 'Cuánto cuesta cada paciente y cuánto deja.'],
+  ['g-6', 'i-check', 'Plan de crecimiento', 'Qué priorizar este 2026 para crecer en serio.'],
+];
+
+// Frases típicas que aparecen en las auditorías (no son testimonios de clientes).
+const phrases = [
+  ['Clínica con 2 sillas', 'Mis tratamientos son buenos, mi equipo es bueno… pero los pacientes nuevos no llegan.', 'aligner.jpg', 'tall'],
+  ['Clínica con 3 sillas', 'Probé con una agencia y solo me hablaban de likes. Yo necesito pacientes en la silla.', '', ''],
+  ['Dueña de clínica', 'Quiero abrir mi segunda clínica, pero la primera apenas es rentable.', '', ''],
+  ['Clínica en Madrid', 'Facturo 10.000 € al mes y sé que una clínica como la mía debería estar en 30.000 €.', 'patient-smile.jpg', ''],
+  ['Odontólogo y gerente', 'No tengo tiempo de aprender marketing. Necesito que alguien me diga qué hacer.', '', ''],
+  ['Clínica familiar', 'La franquicia de al lado anuncia precios que yo no puedo ni quiero igualar.', '', ''],
+  ['Clínica con 1 silla', 'Me llegan contactos por WhatsApp, pero se pierden antes de agendar.', 'clinic-room.jpg', ''],
+  ['Clínica en Valencia', 'Me llaman pidiendo precio, no tratamiento. Quiero mejores pacientes.', '', ''],
+  ['Clínica con 5 sillas', 'Invertimos en publicidad y no sabemos qué funciona y qué no.', '', ''],
+  ['Ortodoncista', 'Mi web es bonita, pero nadie pide cita desde ella.', 'scan-tablet.jpg', ''],
+  ['Clínica en Sevilla', 'Tenemos buenas reseñas, pero no aparecemos cuando buscan dentista en la zona.', '', ''],
+  ['Implantólogo', 'Hago implantes de calidad y la gente llega preguntando por el más barato.', 'implant-model.jpg', ''],
+];
+
+const ribbons = [
+  ['Ubicada en', 'España'], ['Factura más de', '10.000 € / mes'], ['Busca crecer', 'En 2026'],
+  ['Ya atiende', 'Pacientes'], ['Quiere', 'Mejores tratamientos'], ['No busca', 'Solo descuentos'],
+];
+
+const faqs = [
+  ['¿Qué es HackDental?', '<p>HackDental es marketing dental hecho por especialistas, no por una agencia genérica. Trabajas directamente con Jose Whittembury, su fundador, para diagnosticar por qué tu clínica no está creciendo y qué está bloqueando tus ventas hoy.</p>'],
+  ['¿Para qué tipo de consultorio son los servicios de HackDental?', '<p>Para consultorios y clínicas dentales que ya atienden pacientes y quieren más pacientes, mejores tratamientos y menos desorden en su marketing. No trabajamos con clínicas que solo buscan descuentos, sino con quienes quieren crecer en serio y posicionarse mejor en su zona.</p>'],
+  ['Me interesa la auditoría gratuita, ¿cómo aplico?', '<p>Solo debes llenar el formulario con los datos de tu clínica. Revisamos cada solicitud y, si vemos que podemos ayudarte, te contactamos para agendar la auditoría. Es un proceso simple y rápido.</p>'],
+  ['¿Qué incluye la auditoría gratuita?', '<p>Analizamos:</p><ul><li>Tu web y si convierte visitas en citas</li><li>Tu captación de pacientes online</li><li>Tus anuncios y tu presencia en Google</li><li>Dónde estás perdiendo oportunidades</li></ul><p>Te mostramos qué mejorar, qué priorizar y qué acciones tomar para atraer mejores pacientes, aunque no trabajes con nosotros.</p>'],
+  ['¿Es una llamada comercial?', '<p>No. Es un análisis estratégico de tu marketing y tu captación. Sin compromiso de compra y 100 % personalizado.</p>'],
+  ['¿Trabajáis con clínicas fuera de España?', '<p>Por ahora la auditoría solo aplica si tu consultorio está en España.</p>'],
+  ['¿Cuánto tardáis en responder?', '<p>Respondemos en menos de 24 horas. Si lo prefieres, también puedes aplicar por WhatsApp.</p>'],
+];
+
+const ctaItems = ['Gratis', 'Reunión 1:1', 'Respuesta en 24 h'];
+const whatsapp = 'https://wa.me/51903300422?text=Hola,%20me%20interesa%20la%20auditor%C3%ADa%20de%20marketing%20dental';
 ---
 
-<Layout>
-	<Hero />
-	<NuevosPacientes/>
-	<PreguntasFrecuentes/>
-</Layout>
+<SiteLayout>
+<IconSprite />
+
+<!-- ===== Navegación ===== -->
+<header class="nav is-top" id="nav">
+  <div class="nav-inner">
+    <a class="glass-pill nav-logo" href="#top" aria-label="HackDental, inicio">
+      <svg class="logo-mark" style="color:#008060"><use href="#logo"/></svg>
+      <span class="logo-word">Hack<b>Dental</b></span>
+    </a>
+    <nav class="glass-pill nav-center" aria-label="Principal">
+      <a href="#metodo">Método</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#como-funciona">Cómo aplicar</a>
+      <a href="#faq">Preguntas</a>
+    </nav>
+    <CtaButton size="sm" text="Aplicar" />
+  </div>
+</header>
+
+<main class="book" id="top">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <span class="orbit orbit-1" aria-hidden="true"></span>
+    <span class="orbit orbit-2" aria-hidden="true"></span>
+    <span class="orbit orbit-3" aria-hidden="true"></span>
+    <span class="orbit orbit-4" aria-hidden="true"></span>
+
+    <div class="hero-head container">
+      <div class="fan" id="fan" aria-hidden="true">
+        {fanCards.map(([file, label]) => (
+          <div class="fan-card"><img src={img(file)} alt=""><span>{label}</span></div>
+        ))}
+      </div>
+      <span class="trust-pill">
+        <span class="avatars">
+          <img src={img('doctor-phone.jpg')} alt="">
+          <img src={img('doctor-teal.jpg')} alt="">
+          <img src={img('doctor-pink.jpg')} alt="">
+        </span>
+        <span>Trabaja <b>1:1</b> con el fundador de <b>HackDental</b></span>
+      </span>
+
+      <p class="hero-eyebrow"><svg class="icon"><use href="#i-alert"/></svg> Solo para dueños de clínicas dentales</p>
+      <h1 class="t-hero">Convierte tu clínica en la <span class="grad-text">nº1 de tu zona</span></h1>
+      <p class="hero-sub t-body">Recibe una auditoría de marketing gratuita y descubre qué está bloqueando la llegada de pacientes nuevos a tu clínica.</p>
+
+      <div class="hero-cta">
+        <CtaButton size="lg" founder bounce items={ctaItems} />
+        <p class="hero-note">Sin compromiso de compra. Análisis 100 % personalizado.</p>
+      </div>
+
+      <svg class="mascot hero-mascot" aria-hidden="true"><use href="#mascot"/></svg>
+    </div>
+
+    <!-- Pestañas: qué revisa la auditoría -->
+    <div class="product-wrap">
+    <svg class="mascot hero-mascot-m" aria-hidden="true"><use href="#mascot"/></svg>
+    <div class="tabs" role="tablist" aria-label="Qué revisamos en tu auditoría">
+      <button class="tab" role="tab" aria-selected="true" data-tab="captacion"><span class="tab-ico is-blue"><svg class="icon"><use href="#i-layers"/></svg></span><span class="tab-label">Captación</span></button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="web"><span class="tab-ico is-pink"><svg class="icon"><use href="#i-globe"/></svg></span><span class="tab-label">Web</span></button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="anuncios"><span class="tab-ico is-orange"><svg class="icon"><use href="#i-target"/></svg></span><span class="tab-label">Anuncios</span></button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="rentabilidad"><span class="tab-ico is-purple"><svg class="icon"><use href="#i-euro"/></svg></span><span class="tab-label">Rentabilidad</span></button>
+    </div>
+
+    <div class="rail">
+      <div class="product soft-card">
+        <!-- Panel: Captación (tablero de la auditoría) -->
+        <div class="product-panel is-active" data-panel="captacion" role="tabpanel">
+          <div class="panel-head"><span class="tab-ico is-blue"><svg class="icon"><use href="#i-layers"/></svg></span><b>Captación</b></div>
+          <div class="app">
+            <aside class="app-side" aria-hidden="true">
+              <div class="app-brand"><svg class="logo-mark" style="color:#008060"><use href="#logo"/></svg> Tu auditoría</div>
+              <a><svg class="icon"><use href="#i-home"/></svg> Resumen</a>
+              <a class="is-active"><svg class="icon"><use href="#i-layers"/></svg> Captación</a>
+              <a><svg class="icon"><use href="#i-globe"/></svg> Web</a>
+              <a><svg class="icon"><use href="#i-target"/></svg> Anuncios</a>
+              <a><svg class="icon"><use href="#i-star"/></svg> Reseñas</a>
+              <a><svg class="icon"><use href="#i-chat"/></svg> WhatsApp</a>
+              <div class="app-foot"><svg class="icon" style="width:12px;height:12px"><use href="#i-lock"/></svg> Tus datos, protegidos</div>
+            </aside>
+            <div class="app-main">
+              <div class="app-top">
+                <h3>Diagnóstico de tu clínica</h3>
+                <span class="t-mini">Preparado por <span class="avatars"><img src={img('doctor-phone.jpg')} alt=""></span> Jose Whittembury</span>
+              </div>
+              <div class="kanban" aria-label="Hallazgos de la auditoría">
+                <div class="kcol">
+                  <div class="kcol-head"><i style="background:#c3cdc8"></i> Por revisar</div>
+                  <div class="kcard"><b>Ficha de Google Business</b><small>Fotos, categorías y reseñas sin trabajar</small><div class="tags"><span class="ktag is-blue">Google</span><span class="ktag">Local</span></div></div>
+                  <div class="kcard"><b>Mensaje de la web</b><small>Habla de la clínica, no del paciente</small><div class="tags"><span class="ktag is-pink">Web</span></div></div>
+                  <div class="kcard"><b>Precio por delante</b><small>Vendes precio en lugar de calidad</small><div class="tags"><span class="ktag">Mensaje</span></div></div>
+                </div>
+                <div class="kcol">
+                  <div class="kcol-head"><i style="background:#8cbf2f"></i> Prioridad</div>
+                  <div class="kcard"><b>Campaña de implantes</b><small>Tu tratamiento de mayor valor sin captación</small><div class="tags"><span class="ktag is-blue">Implantes</span><span class="ktag is-orange">Meta Ads</span></div></div>
+                  <div class="kcard"><b>Seguimiento de leads</b><small>Los contactos se enfrían antes de agendar</small><div class="tags"><span class="ktag is-green">WhatsApp</span></div></div>
+                  <div class="kcard"><b>Formulario de cita</b><small>Demasiados pasos para pedir una visita</small><div class="tags"><span class="ktag is-pink">Web</span></div></div>
+                </div>
+                <div class="kcol">
+                  <div class="kcol-head"><i style="background:#12925f"></i> A tu favor</div>
+                  <div class="kcard"><b>Tratamientos de calidad</b><small>Lo difícil ya lo tienes</small><div class="tags"><span class="ktag is-purple">Clínica</span></div></div>
+                  <div class="kcard"><b>Equipo con experiencia</b><small>Una historia que contar en anuncios</small><div class="tags"><span class="ktag is-purple">Marca</span></div></div>
+                  <div class="kcard"><b>Pacientes satisfechos</b><small>Reseñas listas para pedir</small><div class="tags"><span class="ktag is-green">Reseñas</span></div></div>
+                </div>
+                <div class="kcol">
+                  <div class="kcol-head"><i style="background:#008060"></i> Oportunidad</div>
+                  <div class="kcard is-failed"><b>Publicidad genérica</b><small>Inversión sin estrategia ni medición</small><div class="tags"><span class="ktag">Anuncios</span></div></div>
+                  <div class="kcard"><b>Plan para 2026</b><small>Qué hacer primero para crecer</small><div class="tags"><span class="ktag is-purple">Estrategia</span></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel: Web -->
+        <div class="product-panel" data-panel="web" role="tabpanel">
+          <div class="panel-head"><span class="tab-ico is-pink"><svg class="icon"><use href="#i-globe"/></svg></span><b>Web</b></div>
+          <div class="panel-split">
+            <div class="panel-copy">
+              <h3>Una web que convierte visitas en citas, no solo bonita.</h3>
+              <div class="lines">
+                <div class="line-card"><span class="num" style="background:#008060">01</span><div><b>Mensaje centrado en el paciente</b><small>Qué gana, no cuántos años tiene la clínica</small></div></div>
+                <div class="line-card"><span class="num" style="background:#00a37a">02</span><div><b>Páginas por tratamiento</b><small>Implantes, ortodoncia y estética con su propio camino</small></div></div>
+                <div class="line-card"><span class="num" style="background:#0e8f7e">03</span><div><b>Pedir cita en dos toques</b><small>Formulario corto y WhatsApp siempre a mano</small></div></div>
+              </div>
+            </div>
+            <div class="panel-photo">
+              <img src={img('scan-tablet.jpg')} alt="Odontólogo mostrando información a un paciente en una tablet">
+              <span class="float-chip" style="left:24px;top:24px"><span class="dot" style="background:#008060"><svg class="icon"><use href="#i-globe"/></svg></span>Visita → cita</span>
+              <span class="float-chip" style="right:24px;bottom:24px"><span class="dot" style="background:#0e8f7e"><svg class="icon"><use href="#i-cal"/></svg></span>Nueva primera visita</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel: Anuncios -->
+        <div class="product-panel" data-panel="anuncios" role="tabpanel">
+          <div class="panel-head"><span class="tab-ico is-orange"><svg class="icon"><use href="#i-target"/></svg></span><b>Anuncios</b></div>
+          <div class="panel-split">
+            <div class="panel-copy">
+              <h3>Anuncios que atraen al paciente correcto, no al que busca el más barato.</h3>
+              <div class="lines">
+                <div class="line-card"><span class="num" style="background:#4f9f2f">01</span><div><b>Meta y Google con estrategia</b><small>Cada euro con un objetivo y una métrica</small></div></div>
+                <div class="line-card"><span class="num" style="background:#8cbf2f">02</span><div><b>Mensajes por tratamiento</b><small>Vender calidad en lugar de precio</small></div></div>
+                <div class="line-card"><span class="num" style="background:#1f6f54">03</span><div><b>Leads que se siguen</b><small>Del clic al WhatsApp y a la silla</small></div></div>
+              </div>
+            </div>
+            <div class="panel-photo">
+              <img src={img('patient-smile.jpg')} alt="Paciente sonriendo en la consulta">
+              <span class="float-chip" style="left:24px;top:24px"><span class="dot" style="background:#4f9f2f"><svg class="icon"><use href="#i-target"/></svg></span>Campaña de estética</span>
+              <span class="float-chip" style="right:24px;bottom:24px"><span class="dot" style="background:#12925f"><svg class="icon"><use href="#i-check"/></svg></span>Paciente agendado</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel: Rentabilidad -->
+        <div class="product-panel" data-panel="rentabilidad" role="tabpanel">
+          <div class="panel-head"><span class="tab-ico is-purple"><svg class="icon"><use href="#i-euro"/></svg></span><b>Rentabilidad</b></div>
+          <div class="panel-split">
+            <div class="panel-copy">
+              <h3>Más pacientes está bien. Más pacientes rentables, mejor.</h3>
+              <div class="lines">
+                <div class="line-card"><span class="num" style="background:#1f6f54">01</span><div><b>Tratamientos de alto valor</b><small>Implantes, ortodoncia y estética primero</small></div></div>
+                <div class="line-card"><span class="num" style="background:#0e8f7e">02</span><div><b>Coste por paciente</b><small>Sabes cuánto te cuesta y cuánto te deja</small></div></div>
+                <div class="line-card"><span class="num" style="background:#12925f">03</span><div><b>Base para tu segunda clínica</b><small>Primero llenar una, luego abrir la siguiente</small></div></div>
+              </div>
+            </div>
+            <div class="panel-photo">
+              <img src={img('doctor-teal.jpg')} alt="Dentista con uniforme en su clínica">
+              <span class="float-chip" style="left:24px;top:24px"><span class="dot" style="background:#1f6f54"><svg class="icon"><use href="#i-trend"/></svg></span>Facturación en crecimiento</span>
+              <span class="float-chip" style="right:24px;bottom:24px"><span class="dot" style="background:#008060"><svg class="icon"><use href="#i-pin"/></svg></span>Nº1 de tu zona</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!-- Texto que se revela con el scroll -->
+    <div class="reveal-text container" data-wordreveal>
+      <p>Tus tratamientos son buenos. Tu equipo es bueno. Pero eso no es suficiente en 2026.</p>
+      <p>Hoy no gana la mejor clínica: gana la que tiene una estrategia de marketing rentable.</p>
+      <p>HackDental la diseña contigo para traer <span class="inline-ico" style="background:#dcf0e9;color:#0e8f7e"><svg class="icon"><use href="#i-user"/></svg></span> más pacientes y <span class="inline-ico" style="background:#d6eee3;color:#008060"><svg class="icon"><use href="#i-implant"/></svg></span> mejores tratamientos a tu clínica.</p>
+    </div>
+
+    <!-- Cinta de ejemplos de anuncios -->
+    <div class="belt" aria-label="Ejemplos de campañas para clínicas dentales">
+      <div class="belt-track" id="belt">
+        {[...adExamples, ...adExamples].map(([file, title, text], i) => (
+          <article class="case" aria-hidden={i >= adExamples.length ? 'true' : undefined}>
+            <div class="case-head"><span class="avatars"><span style="background:#008060"><svg class="icon" style="width:12px;height:12px;color:#fff"><use href="#logo"/></svg></span></span><div><b>tuclinica.dental</b><small>Publicidad · ejemplo</small></div><span class="more">···</span></div>
+            <img src={img(file)} alt="" loading="lazy">
+            <div class="case-foot">
+              <div class="acts"><svg class="icon"><use href="#i-heart"/></svg><svg class="icon"><use href="#i-chat"/></svg><svg class="icon"><use href="#i-send"/></svg><svg class="icon save"><use href="#i-bookmark"/></svg></div>
+              <b>Pide tu primera visita</b>
+              <small><strong>{title}.</strong> {text}</small>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <!-- Contador -->
+    <div class="counter rail" id="destacados">
+      <div class="big-number" id="counter" data-count="30000" data-suffix=" €">30.000 €</div>
+      <h2 class="sr-only">Lo que una clínica como la tuya debería facturar al mes.</h2>
+      <div class="counter-card soft-card">
+        <div class="badges" aria-hidden="true">
+          <span class="badge"><b>1:1</b>fundador</span>
+          <span class="badge"><b>24 h</b>respuesta</span>
+          <span class="badge"><b>0 €</b>auditoría</span>
+        </div>
+        <div>
+          <h2>Lo que una clínica como la tuya debería facturar al mes.</h2>
+          <p>Si hoy facturas 10.000 €, el problema no son tus tratamientos: es que no sabes conseguir pacientes online.</p>
+        </div>
+        <CtaButton text="Quiero mi auditoría" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MÉTODO ===== -->
+  <section class="elite rail" id="metodo">
+    <div class="elite-grid">
+      <h2 class="t-h1 glow-title reveal" data-text="Marketing dental hecho por expertos.
+No por una agencia genérica.">Marketing dental hecho por expertos.<br><span class="l2">No por una agencia genérica.</span></h2>
+      <div class="elite-copy reveal d-1">
+        <p>El marketing genérico no funciona en clínicas dentales. Publicidad genérica, mensajes sin estrategia y vender precio en lugar de calidad: eso hace la mayoría.</p>
+        <p>Mi trabajo es diagnosticar exactamente por qué tu clínica no está creciendo y qué está bloqueando tus ventas hoy.</p>
+      </div>
+      <div class="elite-stage reveal">
+        <svg class="mascot mascot-big" aria-hidden="true"><use href="#mascot"/></svg>
+        <svg class="icon spark" style="width:28px;height:28px;left:18%;top:22%"><use href="#i-spark"/></svg>
+        <svg class="icon spark" style="width:18px;height:18px;right:20%;top:30%;color:#008060"><use href="#i-spark"/></svg>
+        <svg class="icon spark" style="width:22px;height:22px;right:24%;bottom:18%;color:#8cbf2f"><use href="#i-spark"/></svg>
+      </div>
+      <div class="wishes">
+        <div class="wish soft-card soft-card--16 is-blue reveal"><div><div class="label">Diagnóstico</div><h3>Auditoría de tu captación</h3></div><div class="mini mini-cal"><span>1</span><span>2</span><span>3</span><span class="on">4</span><span>5</span><span>6</span><span class="on">7</span><span>8</span><span>9</span><span class="on">10</span><span>11</span><span>12</span><span>13</span><span class="on">14</span><span>15</span></div></div>
+        <div class="wish soft-card soft-card--16 is-pink reveal d-1"><div><div class="label">Plan</div><h3>Qué priorizar, sin humo</h3></div><div class="mini"><div class="mini-bars"><i></i><i></i><i></i><i></i></div><div class="mini-bars-label"><span>Hoy</span><span>Mes 1</span><span>Mes 3</span><span>2026</span></div></div></div>
+        <div class="wish soft-card soft-card--16 is-purple reveal d-2"><div><div class="label">Especialización</div><h3>Solo clínicas dentales</h3></div><div class="mini mini-chips"><span class="on">Implantes</span><span>Ortodoncia</span><span>Estética</span><span class="on">Higiene</span></div></div>
+        <div class="wish soft-card soft-card--16 is-green reveal d-3"><div><div class="label">Seguimiento</div><h3>Ningún lead se queda sin respuesta</h3></div><div class="mini mini-rows"><div><b>Aviso por WhatsApp</b><span class="mini-toggle"></span></div><div><span>Primera visita</span><b>Agendada</b></div><div><span>Respuesta</span><b>&lt; 24 h</b></div></div></div>
+        <div class="wish soft-card soft-card--16 is-orange reveal d-3"><div><div class="label">Resultados</div><h3>Métricas que entiendes</h3></div><div class="mini mini-prog"><div>Pacientes <i style="--w:82%"></i></div><div>Citas <i style="--w:64%"></i></div><div>Facturación <i style="--w:91%"></i></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BLURBS 1 ===== -->
+  <section class="blurbs rail">
+    <div class="blurbs-grid">
+      <div class="blurb reveal"><svg class="icon"><use href="#i-bulb"/></svg><p><b>No es tu tratamiento.</b> Es que no sabes conseguir pacientes online. Hacer bien tu trabajo ya no garantiza pacientes nuevos.</p></div>
+      <div class="blurb reveal d-1"><svg class="icon"><use href="#i-layers"/></svg><p><b>Todo conectado.</b> Web, anuncios, Google y WhatsApp trabajando juntos, sin cinco proveedores distintos.</p></div>
+      <div class="blurb reveal d-2"><svg class="icon"><use href="#i-send"/></svg><p><b>No necesitas saber de marketing.</b> Necesitas pacientes en la silla. Mira el plan y di que sí.</p></div>
+    </div>
+  </section>
+
+  <!-- ===== CUALQUIER… ===== -->
+  <section class="anys rail" id="servicios">
+    <div class="any soft-card reveal">
+      <div>
+        <h3 class="t-card">Cualquier tratamiento, <span class="tail">con su propia estrategia.</span></h3>
+        <p class="lead">No es lo mismo captar un paciente de higiene que uno de implantes. Cada tratamiento tiene su mensaje, su anuncio y su seguimiento.</p>
+      </div>
+      <div>
+        <div class="search"><svg class="icon"><use href="#i-search"/></svg><span data-type="Implantes|Ortodoncia|Carillas|Blanqueamiento|Infantil"></span><span class="caret"></span></div>
+        <div class="chips" data-chips>
+          <span class="chip is-blue">Implantes</span><span class="chip is-pink">Ortodoncia</span><span class="chip is-orange">Carillas</span><span class="chip is-purple">Blanqueamiento</span><span class="chip">Endodoncia</span><span class="chip">Periodoncia</span><span class="chip">Infantil</span><span class="chip">Prótesis</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="any soft-card reveal">
+      <div>
+        <h3 class="t-card">Cualquier tamaño, <span class="tail">de 1 silla a tu segunda clínica.</span></h3>
+        <p class="lead">¿Cómo vas a abrir 3 clínicas si no sabes llenar una? Primero hacemos rentable la que tienes; después, a crecer.</p>
+      </div>
+      <div>
+        <div class="search"><svg class="icon"><use href="#i-search"/></svg><span data-type="1 silla|2 a 4 sillas|5 o más sillas|Segunda clínica"></span><span class="caret"></span></div>
+        <div class="ages">
+          <div class="age soft-card"><span class="code">1</span>Una silla</div>
+          <div class="age soft-card"><span class="code">2–4</span>Clínica mediana</div>
+          <div class="age soft-card"><span class="code">5+</span>Clínica grande</div>
+          <div class="age soft-card"><span class="code">2ª</span>Segunda clínica</div>
+          <div class="age soft-card"><span class="code">ES</span>Toda España</div>
+          <div class="age is-more">+ independientes frente a franquicias</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="any soft-card reveal">
+      <div>
+        <h3 class="t-card">Cualquier canal, <span class="tail">conectado y medido.</span></h3>
+        <p class="lead">Google, Meta, Instagram, tu web y WhatsApp. Sabemos qué canal trae pacientes y cuál solo trae likes.</p>
+      </div>
+      <div>
+        <div class="search"><svg class="icon"><use href="#i-search"/></svg><span data-type="Google|Meta Ads|Instagram|WhatsApp|Web"></span><span class="caret"></span></div>
+        <div class="tiles" data-tiles>
+          <span class="tile is-on" style="background:#0e8f7e">GO</span><span class="tile"></span><span class="tile is-on" style="background:#008060">ME</span><span class="tile is-on" style="background:#17241f">IG</span>
+          <span class="tile"></span><span class="tile is-on" style="background:#4f9f2f">WA</span><span class="tile"></span><span class="tile"></span>
+          <span class="tile is-on" style="background:#1f6f54">WEB</span><span class="tile"></span><span class="tile is-on" style="background:#2ec4a0">GB</span><span class="tile"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HERRAMIENTAS (oscuro) ===== -->
+  <section class="dark tech">
+    <div class="rail">
+      <div class="tech-head reveal">
+        <h2 class="t-h2">Marketing que se mide. Pacientes que se notan.</h2>
+        <div class="arrows"><button type="button" data-tech="prev" aria-label="Anterior"><svg class="icon"><use href="#i-left"/></svg></button><button type="button" data-tech="next" aria-label="Siguiente"><svg class="icon"><use href="#i-right"/></svg></button></div>
+      </div>
+      <div class="tech-row" id="techRow">
+        <div class="reveal">
+          <div class="tech-card">
+            <div class="tech-media"><img src={img('assistant-tablet.jpg')} alt="Asistente dental revisando la agenda en una tablet"><span class="float-chip" style="left:16px;top:16px"><svg class="icon" style="width:14px;height:14px;color:#0e8f7e"><use href="#i-target"/></svg> Anuncios con estrategia</span><div class="bar"><b>Pacientes que buscan calidad</b><i style="--w:82%"></i></div></div>
+          </div>
+          <p class="tech-cap"><b>Anuncios que filtran.</b> Atraen al paciente que valora tu trabajo, no al que solo compara precios.</p>
+        </div>
+        <div class="reveal d-1">
+          <div class="tech-card">
+            <div class="tech-media"><img src={img('xray-screen.jpg')} alt="Dentista analizando una radiografía digital en pantalla"><span class="float-chip" style="left:16px;top:16px"><svg class="icon" style="width:14px;height:14px;color:#1f6f54"><use href="#i-globe"/></svg> Web que convierte</span><div class="bar"><b>Visitas convertidas en citas</b><i style="--w:100%"></i></div></div>
+          </div>
+          <p class="tech-cap"><b>Web pensada para vender.</b> Cada página lleva a pedir una cita, con el tratamiento correcto.</p>
+        </div>
+        <div class="reveal d-2">
+          <div class="tech-card">
+            <div class="tech-media"><img src={img('models.jpg')} alt="Modelos dentales para planificación"><span class="float-chip" style="left:16px;top:16px"><svg class="icon" style="width:14px;height:14px;color:#008060"><use href="#i-trend"/></svg> Métricas claras</span><div class="bar"><b>Coste por paciente bajo control</b><i style="--w:64%"></i></div></div>
+          </div>
+          <p class="tech-cap"><b>Rentabilidad medida.</b> Sabes qué funciona, qué no y dónde poner el siguiente euro.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== AGENDA (oscuro) ===== -->
+  <section class="dark calendar" id="agenda">
+    <div class="rail center">
+      <h2 class="t-h2 reveal">Tu agenda, llena de pacientes de valor.</h2>
+      <p class="lead t-body reveal d-1">Cuando la captación funciona, la semana se llena de primeras visitas de los tratamientos que hacen crecer tu clínica.</p>
+    </div>
+    <div class="stage">
+      <div class="tablet">
+        <div class="tablet-ui" aria-hidden="true">
+          <div class="tablet-bar">
+            <span class="seg">← Volver</span><span class="seg">Día</span><span class="seg on">Semana</span><span class="seg">Agenda de tu clínica</span><span class="gap"></span><span class="seg">Todos los tratamientos ▾</span><span class="new">+ Nuevo paciente</span>
+          </div>
+          <div class="week">
+            <div class="day"><small><b>17</b>LUN</small></div>
+            <div class="day"><small><b>18</b>MAR</small></div>
+            <div class="day"><small><b>19</b>MIÉ</small></div>
+            <div class="day"><small><b>20</b>JUE</small></div>
+            <div class="day"><small><b>21</b>VIE</small></div>
+            <div class="day"><small><b>22</b>SÁB</small></div>
+          </div>
+        </div>
+      </div>
+      <div class="appt float-a" style="left:14%;top:40px"><img src={img('chair-patient.jpg')} alt=""><span class="time">9:00</span><span class="kind"><i style="background:#0e8f7e"></i>1ª visita</span></div>
+      <div class="appt float-b" style="left:30%;top:110px"><img src={img('brushes.jpg')} alt=""><span class="time">13:30</span><span class="kind"><i style="background:#12925f"></i>Higiene</span></div>
+      <div class="appt float-c" style="left:46%;top:170px"><img src={img('aligner.jpg')} alt=""><span class="time">10:00</span><span class="kind"><i style="background:#008060"></i>Ortodoncia</span></div>
+      <div class="appt float-d" style="left:61%;top:120px"><img src={img('implant-model.jpg')} alt=""><span class="time">17:00</span><span class="kind"><i style="background:#1f6f54"></i>Implante</span></div>
+      <div class="appt float-a" style="left:77%;top:60px"><img src={img('kid.jpg')} alt=""><span class="time">11:15</span><span class="kind"><i style="background:#8cbf2f"></i>Infantil</span></div>
+      <div class="appt float-b" style="left:8%;top:330px"><img src={img('patient-smile.jpg')} alt=""><span class="time">15:30</span><span class="kind"><i style="background:#4f9f2f"></i>Estética</span></div>
+      <div class="appt float-c" style="left:24%;top:430px"><img src={img('doctor-teal.jpg')} alt=""><span class="time">8:45</span><span class="kind"><i style="background:#00a37a"></i>Revisión</span></div>
+      <div class="appt float-d" style="left:70%;top:400px"><img src={img('friends.jpg')} alt=""><span class="time">16:15</span><span class="kind"><i style="background:#2ec4a0"></i>Carillas</span></div>
+    </div>
+    <div class="approval rail" id="aplicar">
+      <h2 class="t-h2 reveal">Un sí, y empezamos.</h2>
+      <p class="lead t-body reveal d-1">Revisamos cada solicitud. Si vemos que podemos ayudarte, el fundador de HackDental te contacta en menos de 24 horas para agendar tu auditoría.</p>
+      <div class="toggle" id="toggle" role="img" aria-label="Interruptor de aplicación activado"></div>
+      <div class="toggle-label">APLICAR A LA AUDITORÍA</div>
+      <svg class="mascot toggle-mascot" aria-hidden="true"><use href="#mascot"/></svg>
+    </div>
+  </section>
+
+  <!-- ===== MARQUESINA DE SERVICIOS (oscuro) ===== -->
+  <section class="dark marquee-dark" aria-label="Servicios">
+    <div class="marquee-track" id="services">
+      {[...services, ...services].map(([g, icon, title, text], i) => (
+        <div class="svc soft-card-dark" aria-hidden={i >= services.length ? 'true' : undefined}>
+          <span class="svc-chip"><i class={g}><svg class="icon"><use href={`#${icon}`}/></svg></i>{title}</span>
+          <p>{text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ===== CÓMO APLICAR ===== -->
+  <section class="how rail" id="como-funciona">
+    <div class="how-grid">
+      <div class="how-left">
+        <h2 class="t-h1">Cómo aplicar</h2>
+        <p class="lead">Llena tus datos y nosotros nos ocupamos del resto: de la solicitud a tu plan de crecimiento en cuatro pasos simples y rápidos.</p>
+        <ul class="steps" id="stepsNav">
+          <li class="is-active"><button type="button" data-goto="paso-1"><span class="num">01</span><b>Llena tus datos</b></button></li>
+          <li><button type="button" data-goto="paso-2"><span class="num">02</span><b>Cuéntanos tu meta</b></button></li>
+          <li><button type="button" data-goto="paso-3"><span class="num">03</span><b>Agenda la reunión</b></button></li>
+          <li><button type="button" data-goto="paso-4"><span class="num">04</span><b>Recibe tu plan</b></button></li>
+        </ul>
+        <CtaButton text="Aplicar a la auditoría" />
+      </div>
+      <div class="how-right">
+        <div class="step reveal" id="paso-1" data-step="1">
+          <div class="step-head"><span class="num">01</span><h3>Llena tus datos</h3></div>
+          <p>Tu email, el nombre de tu clínica y tu web. Nos ayuda a preparar la auditoría antes de hablar contigo.</p>
+          <div class="mock-stage soft-card soft-card--24">
+            <div class="ui-card">
+              <div class="dots"><i></i><i></i><i></i></div>
+              <div class="ui-label">Empieza aquí</div>
+              <div class="ui-input"><svg class="icon"><use href="#i-user"/></svg> tu@clinica.es</div>
+              <div class="ui-btn">Continuar</div>
+            </div>
+            <svg class="cursor" style="right:32%;bottom:22%"><use href="#cursor"/></svg>
+          </div>
+        </div>
+        <div class="step reveal" id="paso-2" data-step="2">
+          <div class="step-head"><span class="num">02</span><h3>Cuéntanos tu meta</h3></div>
+          <p>¿Qué quieres lograr con la auditoría? Con eso, el tamaño de tu consultorio y su contexto económico, sabemos por dónde empezar.</p>
+          <div class="mock-stage soft-card soft-card--24">
+            <div class="ui-options">
+              <div class="ui-opt">Quiero mejorar la presencia online <i></i></div>
+              <div class="ui-opt is-on">Quiero más pacientes este 2026 <i><svg class="icon"><use href="#i-check"/></svg></i></div>
+              <div class="ui-opt">Quiero mejorar la rentabilidad <i></i></div>
+            </div>
+            <svg class="cursor" style="right:30%;top:50%"><use href="#cursor"/></svg>
+          </div>
+        </div>
+        <div class="step reveal" id="paso-3" data-step="3">
+          <div class="step-head"><span class="num">03</span><h3>Agenda la reunión</h3></div>
+          <p>Espera 24 horas. El fundador de HackDental se contactará contigo para agendar una reunión 1:1.</p>
+          <div class="mock-stage soft-card soft-card--24">
+            <div class="ui-plan">
+              <div class="ui-day"><small><span>12</span><span>JUE</span></small><div class="thumb"><img src={img('doctor-phone.jpg')} alt=""></div><span class="review">Reunión 1:1</span><div class="approve">Confirmar</div></div>
+              <div class="ui-day"><small><span>14</span><span>VIE</span></small><div class="thumb is-pink"><svg class="icon"><use href="#i-play"/></svg></div><span class="review">Videollamada</span><div class="approve">Confirmar</div></div>
+            </div>
+            <svg class="cursor" style="right:26%;bottom:28%"><use href="#cursor"/></svg>
+          </div>
+        </div>
+        <div class="step reveal" id="paso-4" data-step="4">
+          <div class="step-head"><span class="num">04</span><h3>Recibe tu plan</h3></div>
+          <p>Te mostramos qué mejorar, qué priorizar y qué acciones tomar para atraer mejores pacientes, aunque no trabajes con nosotros.</p>
+          <div class="mock-stage soft-card soft-card--24">
+            <div class="ui-stats">
+              <div class="stat"><small>Pacientes nuevos al mes <span class="ktag is-green">Objetivo</span></small><b>+ crecimiento</b>
+                <svg viewBox="0 0 200 70" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="statG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#008060" stop-opacity=".35"/><stop offset="1" stop-color="#008060" stop-opacity="0"/></linearGradient></defs><path d="M0 60 C30 58 40 40 70 42 S110 50 130 30 S170 10 200 8 V70 H0 Z" fill="url(#statG)"/><path d="M0 60 C30 58 40 40 70 42 S110 50 130 30 S170 10 200 8" fill="none" stroke="#008060" stroke-width="2.5"/><circle cx="200" cy="8" r="4" fill="#008060"/></svg>
+              </div>
+              <div class="stat"><small>Prioridades</small><b>3</b></div>
+              <div class="stat" style="grid-column:2"><small>Coste de la auditoría</small><b>0 €</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BLURBS 2 ===== -->
+  <section class="blurbs rail" style="padding-top:48px">
+    <div class="blurbs-grid">
+      <div class="blurb reveal"><svg class="icon"><use href="#i-target"/></svg><p><b>Especialistas en marketing dental,</b> trabajando sobre tu clínica y no sobre una plantilla genérica de agencia.</p></div>
+      <div class="blurb reveal d-1"><svg class="icon"><use href="#i-pin"/></svg><p><b>Para clínicas independientes en España.</b> Odontólogos talentosos que no quieren ser aplastados por las grandes franquicias.</p></div>
+      <div class="blurb reveal d-2"><svg class="icon"><use href="#i-chat"/></svg><p><b>Fácil de hablar.</b> Escríbenos por WhatsApp y te respondemos en menos de 24 horas.</p></div>
+    </div>
+  </section>
+
+  <!-- ===== DATOS DE TU CLÍNICA (hub) ===== -->
+  <section class="dna" id="datos">
+    <div class="rail">
+      <h2 class="t-h2" data-wordreveal>Impulsado por<br>los datos de tu clínica</h2>
+    </div>
+    <div class="hub">
+      <svg class="hub-lines" viewBox="0 0 1080 560" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="hubA" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#0e8f7e"/><stop offset="1" stop-color="#0e8f7e" stop-opacity=".1"/></linearGradient>
+          <linearGradient id="hubB" x1="1" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#1f6f54"/><stop offset="1" stop-color="#1f6f54" stop-opacity=".1"/></linearGradient>
+        </defs>
+        <path d="M312 62 H420 V176"/><path d="M768 62 H660 V176"/><path d="M246 250 H384"/><path d="M834 250 H696"/><path d="M334 436 H430 V384"/><path d="M746 436 H650 V384"/>
+        <path class="grad-a" d="M180 560 C180 480 400 470 540 505"/><path class="grad-b" d="M900 560 C900 480 680 470 540 505"/>
+        <circle class="a" cx="246" cy="520" r="3.5"/><circle class="b" cx="834" cy="520" r="3.5"/><circle cx="540" cy="505" r="3"/>
+      </svg>
+      <div class="blob" aria-hidden="true"><i></i><i></i><i></i><svg class="core"><use href="#mascot"/></svg></div>
+      <div class="dna-blurbs only-mobile">
+        <div class="blurb"><span class="icon-box"><svg class="icon"><use href="#i-bulb"/></svg></span><p><b>No es tu tratamiento.</b> Es que no sabes conseguir pacientes online.</p></div>
+        <div class="blurb"><span class="icon-box"><svg class="icon"><use href="#i-layers"/></svg></span><p><b>Todo conectado.</b> Web, anuncios, Google y WhatsApp trabajando juntos.</p></div>
+        <div class="blurb"><span class="icon-box"><svg class="icon"><use href="#i-send"/></svg></span><p><b>No necesitas saber de marketing.</b> Necesitas pacientes en la silla. Mira el plan y di que sí.</p></div>
+      </div>
+      <div class="hub-card soft-card soft-card--16 reveal" style="left:90px;top:30px"><i class="g-1"><svg class="icon"><use href="#i-globe"/></svg></i><div><b>Web y SEO local</b><small>Visitas y peticiones de cita</small></div></div>
+      <div class="hub-card soft-card soft-card--16 reveal d-1" style="right:90px;top:30px"><i class="g-3"><svg class="icon"><use href="#i-target"/></svg></i><div><b>Anuncios</b><small>Meta y Google, con su coste</small></div></div>
+      <div class="hub-card soft-card soft-card--16 reveal d-1" style="left:20px;top:218px"><i class="g-5"><svg class="icon"><use href="#i-pin"/></svg></i><div><b>Google Business</b><small>Ficha, fotos y reseñas</small></div></div>
+      <div class="hub-card soft-card soft-card--16 reveal d-2" style="right:20px;top:218px"><i class="g-2"><svg class="icon"><use href="#i-cal"/></svg></i><div><b>Agenda</b><small>Primeras visitas por semana</small></div></div>
+      <div class="hub-card soft-card soft-card--16 reveal d-2" style="left:110px;top:404px"><i class="g-6"><svg class="icon"><use href="#i-euro"/></svg></i><div><b>Rentabilidad</b><small>Facturación por tratamiento</small></div></div>
+      <div class="hub-card soft-card soft-card--16 reveal d-3" style="right:110px;top:404px"><i class="g-4"><svg class="icon"><use href="#i-chat"/></svg></i><div><b>WhatsApp</b><small>Leads y tiempo de respuesta</small></div></div>
+    </div>
+  </section>
+
+  <!-- ===== TARJETAS DE ESTILO ===== -->
+  <section class="style-cards rail">
+    <div class="style-grid">
+      <div class="scard soft-card reveal">
+        <h3>Entiende tu clínica</h3>
+        <p>Analizamos dónde estás hoy y hacia dónde quieres ir, sin prisas y sin plantillas.</p>
+        <div class="viz">
+          <div class="quad" aria-hidden="true"><span class="axis ax-tl">Precio</span><span class="axis ax-tr">Calidad</span><span class="axis ax-bl">Genérico</span><span class="axis ax-br">Especialista</span><div class="grid"></div><div class="pt"></div></div>
+          <ul class="checks"><li><svg class="icon"><use href="#i-check"/></svg> Mensaje que vende calidad</li><li><svg class="icon"><use href="#i-check"/></svg> Tratamientos de valor primero</li><li><svg class="icon"><use href="#i-check"/></svg> Posicionamiento en tu zona</li></ul>
+        </div>
+      </div>
+      <div class="scard soft-card reveal d-1">
+        <h3>Prioriza lo que importa</h3>
+        <p>No todo a la vez: primero lo que más pacientes y facturación te puede traer.</p>
+        <div class="viz">
+          <div class="sliders" aria-hidden="true">
+            <div class="sl"><i style="--h:70%"></i><small>Web</small></div>
+            <div class="sl"><i style="--h:85%"></i><small>Anuncios</small></div>
+            <div class="sl"><i style="--h:60%"></i><small>Google</small></div>
+            <div class="sl is-low"><i style="--h:35%"></i><small>Likes</small></div>
+            <div class="sl"><i style="--h:92%"></i><small>Pacientes</small></div>
+          </div>
+        </div>
+      </div>
+      <div class="scard soft-card reveal d-2">
+        <h3>Ordena tu marketing</h3>
+        <p>Menos desorden: cada acción con su objetivo, su responsable y su resultado.</p>
+        <div class="viz panels" aria-hidden="true">
+          <div class="mini-panel"><div class="row"><span class="ring"></span><div><small>Ficha de Google</small><b style="color:#12925f">Optimizada</b></div></div></div>
+          <div class="mini-panel"><small>Canales activos</small><div class="swatches"><i style="background:#00543f"></i><i style="background:#008060"></i><i style="background:#2ec4a0"></i><i style="background:#c6e35a"></i></div></div>
+          <div class="mini-panel"><small>Respuesta a leads</small><b>&lt; 24 h</b></div>
+          <div class="mini-panel"><small>Campañas</small><div class="plist"><div>Implantes <span class="ktag is-orange">Activa</span></div><div>Higiene <span class="ktag is-green">Hecho</span></div><div>Ortodoncia <span class="ktag">Pendiente</span></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="wide-card soft-card reveal">
+      <div>
+        <h3>Mejora cada mes</h3>
+        <p>Cada campaña nos enseña más sobre tus pacientes: qué mensaje funciona, qué canal rinde y qué tratamiento empujar.</p>
+      </div>
+      <div class="area">
+        <div class="meta"><span>Crecimiento de la clínica</span><b>Objetivo 2026</b></div>
+        <svg viewBox="0 0 600 160" preserveAspectRatio="none" aria-hidden="true">
+          <defs><linearGradient id="areaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#008060" stop-opacity=".35"/><stop offset="1" stop-color="#008060" stop-opacity="0"/></linearGradient></defs>
+          <g stroke="#e1e9e5" stroke-width="1"><line x1="0" y1="40" x2="600" y2="40"/><line x1="0" y1="80" x2="600" y2="80"/><line x1="0" y1="120" x2="600" y2="120"/></g>
+          <path d="M0 140 C80 135 120 120 180 110 S280 90 340 70 S440 30 520 24 S580 20 600 18 V160 H0 Z" fill="url(#areaG)"/>
+          <path d="M0 140 C80 135 120 120 180 110 S280 90 340 70 S440 30 520 24 S580 20 600 18" fill="none" stroke="#008060" stroke-width="2.5"/>
+          <circle cx="520" cy="24" r="5" fill="#008060"/><line x1="520" y1="24" x2="520" y2="160" stroke="#008060" stroke-dasharray="3 4" stroke-width="1"/>
+        </svg>
+        <div class="tags"><span>Pacientes</span><span>Citas</span><span>Tratamientos</span><span>Facturación</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FRASES DE LAS AUDITORÍAS ===== -->
+  <section class="testimonials rail" id="opiniones">
+    <h2 class="t-h2 center reveal">Lo que escuchamos en cada auditoría.</h2>
+    <div class="masonry" id="masonry">
+      {phrases.map(([who, text, photo, tall]) => (
+        <article class="tcard soft-card soft-card--24">
+          <header><span class="ini"><svg class="icon" style="width:18px;height:18px;color:#008060"><use href="#i-chat"/></svg></span><div><b>{who}</b><small>Antes de la auditoría</small></div></header>
+          <p class="quote">«{text}»</p>
+          {photo && <img class:list={['photo', { 'is-tall': tall === 'tall' }]} src={img(photo)} alt="" loading="lazy">}
+        </article>
+      ))}
+    </div>
+    <div class="float-pill-wrap">
+      <a class="float-pill" href="/contacto">
+        <span class="avatars"><img src={img('doctor-phone.jpg')} alt=""><img src={img('doctor-teal.jpg')} alt=""><img src={img('doctor-pink.jpg')} alt=""></span>
+        ¿Te suena? Tiene solución
+        <span class="sep"></span>
+        <span class="more">Aplicar <i><svg class="icon"><use href="#i-arrow"/></svg></i></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== REQUISITOS ===== -->
+  <section class="ratings rail">
+    <div class="ratings-grid">
+      <div class="reveal">
+        <h2 class="t-h2">Aplica si tu clínica<br>cumple lo siguiente</h2>
+        <CtaButton text="Sí, mi clínica cumple" />
+      </div>
+      <div class="ribbons" aria-label="Requisitos para aplicar">
+        <div class="ribbons-track" id="ribbons">
+          {[...ribbons, ...ribbons].map(([top, mid], i) => (
+            <div class="ribbon" aria-hidden={i >= ribbons.length ? 'true' : undefined}><span class="tag">H</span><span class="top">{top}</span><span class="mid">{mid}</span><span class="sub">HackDental</span></div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONFIANZA ===== -->
+  <section class="trust rail">
+    <h2 class="t-h2 reveal">Una auditoría sin riesgo, por diseño.</h2>
+    <div class="trust-grid">
+      <div class="trust-card soft-card soft-card--24 reveal"><span class="icon-box"><svg class="icon"><use href="#i-badge"/></svg></span><h3>Sin compromiso de compra</h3><p>No es una llamada comercial. Es un análisis estratégico de tu marketing y tu captación, y te lo llevas aunque no trabajes con nosotros.</p></div>
+      <div class="trust-card soft-card soft-card--24 reveal d-1"><span class="icon-box"><svg class="icon"><use href="#i-shield"/></svg></span><h3>Tus datos están seguros</h3><p>La información de tu clínica solo se usa para preparar tu auditoría. Tus datos están seguros y protegidos.</p></div>
+      <div class="trust-card soft-card soft-card--24 reveal d-2"><span class="icon-box"><svg class="icon"><use href="#i-user"/></svg></span><h3>100 % personalizado</h3><p>Nada de informes genéricos: miramos tu web, tus anuncios y tu zona, y te decimos qué haríamos en tu lugar.</p></div>
+    </div>
+    <div class="banner soft-card soft-card--24 reveal">
+      <div class="app-icons" aria-hidden="true"><span class="app-icon g-3"><svg class="icon"><use href="#i-search"/></svg></span><span class="app-icon g-2"><svg class="icon"><use href="#i-target"/></svg></span><span class="app-icon g-6"><svg class="icon"><use href="#i-trend"/></svg></span></div>
+      <div><h3>Auditoría gratuita: tu web, tu captación y las oportunidades que estás perdiendo.</h3><p>Espacios limitados este mes. Solo para clínicas en España.</p></div>
+      <CtaButton size="sm" text="Aplicar ahora" />
+    </div>
+  </section>
+
+  <!-- ===== FUNDADOR ===== -->
+  <section class="team rail" id="fundador">
+    <h2 class="t-h2 reveal">Trabaja directamente con el fundador</h2>
+    <p class="lead reveal d-1">Mi misión es clara: ayudar a clínicas dentales independientes. No me parece justo que odontólogos talentosos sean aplastados por grandes franquicias.</p>
+    <div class="team-grid">
+      <div class="doc soft-card soft-card--24 reveal"><Image src={founder} alt="Retrato de Jose Whittembury" width={72} height={72} densities={[1, 2]} class="is-founder" /><h3>Jose Whittembury</h3><div class="role">Fundador de HackDental</div><p>Especialista en marketing dental. Diagnostica por qué tu clínica no está creciendo y qué está bloqueando tus ventas hoy.</p></div>
+      <div class="doc soft-card soft-card--24 reveal d-1"><span class="icon-box"><svg class="icon"><use href="#i-search"/></svg></span><h3>Tu auditoría</h3><div class="role">Gratis · Reunión 1:1</div><p>Tu web, tu captación de pacientes y dónde estás perdiendo oportunidades, explicado sin tecnicismos.</p></div>
+      <div class="doc soft-card soft-card--24 reveal d-2"><span class="icon-box"><svg class="icon"><use href="#i-layers"/></svg></span><h3>Tu plan</h3><div class="role">Qué hacer primero</div><p>Qué mejorar, qué priorizar y qué acciones tomar para atraer mejores pacientes este 2026.</p></div>
+    </div>
+    <figure class="quote reveal">
+      <blockquote>«En 2026 no gana la mejor clínica. Gana la que tiene una estrategia de marketing rentable.»</blockquote>
+      <figcaption><Image src={founder} alt="" width={32} height={32} densities={[1, 2]} /><div><b>Jose Whittembury</b><small>Fundador de HackDental</small></div></figcaption>
+    </figure>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="faq container" id="faq">
+    <h2 class="t-h2 reveal">Preguntas frecuentes</h2>
+    <p class="lead reveal d-1">¿Tienes alguna duda? Respondo en menos de 24 horas. Y la auditoría no cuesta nada.</p>
+    <CtaButton class="reveal d-2" text="Aplicar sin riesgo" />
+    <div class="faq-list" id="faqList">
+      {faqs.map(([q, a], i) => (
+        <div class:list={['faq-item', { 'is-open': i === 0 }]}>
+          <button class="faq-q" type="button" aria-expanded={i === 0 ? 'true' : 'false'}>{q} <svg class="icon"><use href="#i-chev"/></svg></button>
+          <div class="faq-a"><div set:html={a} /></div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ===== CTA FINAL ===== -->
+  <section class="final rail" id="cita">
+    <span class="fchip fchip-1" aria-hidden="true"><svg class="cursor"><use href="#cursor"/></svg><span>Más pacientes</span></span>
+    <span class="fchip fchip-2" aria-hidden="true"><svg class="cursor"><use href="#cursor"/></svg><span>Implantes</span></span>
+    <span class="fchip fchip-3" aria-hidden="true"><svg class="cursor"><use href="#cursor"/></svg><span>Ortodoncia</span></span>
+    <span class="fchip fchip-4" aria-hidden="true"><svg class="cursor"><use href="#cursor"/></svg><span>Rentabilidad</span></span>
+    <h2 class="t-h2 reveal">Recibe hoy tu auditoría de marketing gratuita.</h2>
+    <div class="hero-cta" style="margin-inline:auto">
+      <CtaButton size="lg" founder items={ctaItems} class="reveal d-1" />
+    </div>
+    <svg class="mascot final-mascot" aria-hidden="true"><use href="#mascot"/></svg>
+  </section>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="brand-row">
+        <a href="#top" aria-label="HackDental, inicio" class="logo-text">HackDental</a>
+        <span class="lang" aria-label="Clínicas en España"><span class="flag"></span>España</span>
+      </div>
+      <p class="tagline">Marketing dental para clínicas que<br>quieren crecer en serio.</p>
+      <a class="wpp" href={whatsapp} target="_blank" rel="noopener"><svg class="icon"><use href="#i-chat"/></svg> Consulta por WhatsApp</a>
+    </div>
+    <nav aria-label="Legal"><h2>Legal</h2><ul><li><a href="/politicas">Aviso legal</a></li><li><a href="/politicas">Política de privacidad</a></li></ul></nav>
+    <nav aria-label="Clínicas"><h2>Clínicas</h2><ul><li><a href="/contacto">Aplicar a la auditoría</a></li><li><a href="/ebook">Ebook gratuito</a></li><li><a href="#faq">Preguntas frecuentes</a></li></ul></nav>
+    <nav aria-label="HackDental"><h2>HackDental</h2><ul><li><a href="#metodo">Método</a></li><li><a href="#servicios">Servicios</a></li><li><a href="#fundador">Fundador</a></li></ul></nav>
+  </div>
+  <div class="footer-bottom">
+    <div>© <span id="copy">2026</span> HackDental LLC. Todos los derechos reservados.<br>Marketing dental para clínicas en España.</div>
+    <div class="right">
+      <span class="status"><i></i> Respondemos en menos de 24 h</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  import '../scripts/site.js';
+  const copy = document.getElementById('copy');
+  if (copy) copy.textContent = String(new Date().getFullYear());
+</script>
+</SiteLayout>

@@ -1,0 +1,205 @@
+---
+// src/components/Site/CtaButton.astro
+// CTA del sitio con el estilo de BotonCheckout: degradado verde, sombra 3D,
+// brillo al pasar el ratón y rebote opcional (se apaga con "reducir movimiento").
+// Uso:
+//   <CtaButton />                                   → botón principal
+//   <CtaButton size="lg" founder items={[...]} />   → versión hero con el fundador
+//   <CtaButton size="sm" text="Aplicar" />          → navegación / banners
+import { Image } from 'astro:assets';
+import avatar from '../../assets/Ebook/author.webp';
+
+interface Props {
+  href?: string;
+  text?: string;
+  size?: 'sm' | 'md' | 'lg';
+  /** Franja superior "Atendido por Jose Whittembury · Fundador" */
+  founder?: boolean;
+  name?: string;
+  items?: string[];
+  bounce?: boolean;
+  class?: string;
+}
+
+const {
+  href = '/contacto',
+  text = 'Quiero aplicar a una auditoría',
+  size = 'md',
+  founder = false,
+  name = 'Jose Whittembury',
+  items = [],
+  bounce = false,
+  class: className = '',
+} = Astro.props;
+---
+
+<a href={href} class:list={['cta', `cta--${size}`, { 'cta--bounce': bounce }, className]}>
+  <span class="cta-shine" aria-hidden="true"></span>
+
+  {founder && (
+    <span class="cta-founder">
+      <span class="cta-founder-by">Atendido por</span>
+      <Image src={avatar} alt="" width={24} height={24} densities={[1, 2]} class="cta-avatar" />
+      <b>{name}</b>
+      <span class="cta-badge">Fundador</span>
+    </span>
+  )}
+
+  <span class="cta-body">
+    <span class="cta-text">
+      {text}
+      <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+    </span>
+    {items.length > 0 && (
+      <span class="cta-items">
+        {items.map((item) => (
+          <span class="cta-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>
+            {item}
+          </span>
+        ))}
+      </span>
+    )}
+  </span>
+</a>
+
+<style>
+  .cta {
+    --cta-top: #00a375;
+    --cta-bottom: #008060;
+    --cta-edge: #00412f;
+    --cta-deep: rgba(0, 52, 38, 0.5);
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 10px;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(to bottom, var(--cta-top), var(--cta-bottom));
+    border-top: 1px solid rgba(255, 255, 255, 0.28);
+    box-shadow: 0 5px 0 var(--cta-edge), 0 12px 18px rgba(0, 40, 28, 0.3);
+    transition: scale 0.2s ease-out, translate 0.12s ease-out, filter 0.2s, box-shadow 0.12s ease-out;
+  }
+  .cta:hover { scale: 1.03; filter: brightness(1.08); }
+  .cta:active {
+    scale: 1;
+    translate: 0 4px;
+    box-shadow: 0 1px 0 var(--cta-edge), 0 4px 8px rgba(0, 40, 28, 0.3);
+  }
+  .cta:focus-visible { outline: 3px solid #7ee0bb; outline-offset: 4px; }
+
+  .cta-shine {
+    position: absolute;
+    inset-block: 0;
+    left: -150%;
+    width: 100%;
+    z-index: 5;
+    pointer-events: none;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transform: skewX(-20deg);
+  }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .cta:hover .cta-shine { animation: cta-shine-sweep 0.75s forwards; }
+  }
+  @keyframes cta-shine-sweep { to { left: 150%; } }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .cta--bounce { animation: cta-bounce 1.6s ease-in-out infinite; }
+  }
+  @keyframes cta-bounce {
+    0%, 100% { transform: translateY(-6px); }
+    50% { transform: translateY(0); }
+  }
+
+  .cta-founder {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 7px 12px;
+    background: var(--cta-deep);
+    font-size: 12px;
+    line-height: 1.2;
+  }
+  .cta-founder-by { color: rgba(255, 255, 255, 0.9); }
+  .cta-founder :global(.cta-avatar) { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; }
+  .cta-badge {
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .cta-body {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 22px;
+  }
+  .cta-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: 'Oswald', 'Figtree', sans-serif;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 1.05;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    text-align: center;
+    text-wrap: balance;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  .cta-arrow { width: 20px; height: 20px; flex-shrink: 0; transition: transform 0.3s; }
+  .cta:hover .cta-arrow { transform: translateX(4px); }
+
+  .cta-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .cta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 7px;
+    border-radius: 6px;
+    background: var(--cta-deep);
+  }
+  .cta-item svg { width: 13px; height: 13px; color: #8ff0c6; }
+
+  /* Tamaños */
+  .cta--sm { border-radius: 9px; box-shadow: 0 3px 0 var(--cta-edge), 0 8px 14px rgba(0, 40, 28, 0.25); }
+  .cta--sm:active { translate: 0 2px; }
+  .cta--sm .cta-body { padding: 9px 16px; }
+  .cta--sm .cta-text { font-size: 15px; gap: 8px; }
+  .cta--sm .cta-arrow { width: 16px; height: 16px; }
+
+  .cta--lg .cta-body { padding: 14px 20px 16px; }
+  .cta--lg .cta-text { font-size: 22px; }
+  @media (min-width: 768px) {
+    .cta--lg { box-shadow: 0 6px 0 var(--cta-edge), 0 15px 20px rgba(0, 40, 28, 0.35); }
+    .cta--lg:active { translate: 0 5px; }
+    .cta--lg .cta-founder { padding-block: 8px; font-size: 13px; }
+    .cta--lg .cta-body { padding: 16px 32px 20px; }
+    .cta--lg .cta-text { font-size: 28px; }
+    .cta--lg .cta-arrow { width: 28px; height: 28px; }
+    .cta--lg .cta-items { font-size: 12px; gap: 8px; }
+  }
+</style>
