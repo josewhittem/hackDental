@@ -1,0 +1,154 @@
+---
+// src/components/Site/CtaButton.astro
+// CTA del sitio: píldora verde con relieve 3D, brillo al pasar el ratón,
+// flecha en círculo y rebote opcional (se apaga con "reducir movimiento").
+// Inspirado en BotonCheckout, adaptado al estilo redondeado del sitio.
+// Uso:
+//   <CtaButton />                                → botón principal
+//   <CtaButton size="lg" bounce items={[...]} /> → hero / cierre, con ventajas debajo
+//   <CtaButton size="sm" text="Auditoría gratis" /> → navegación / banners
+interface Props {
+  href?: string;
+  text?: string;
+  size?: 'sm' | 'md' | 'lg';
+  /** Ventajas cortas que se muestran bajo el texto (solo en "lg") */
+  items?: string[];
+  bounce?: boolean;
+  class?: string;
+}
+
+const {
+  href = '/contacto',
+  text = 'Pide tu auditoría gratis',
+  size = 'md',
+  items = [],
+  bounce = false,
+  class: className = '',
+} = Astro.props;
+---
+
+<a href={href} class:list={['cta', `cta--${size}`, { 'cta--bounce': bounce }, className]}>
+  <span class="cta-shine" aria-hidden="true"></span>
+  <span class="cta-body">
+    <span class="cta-text">{text}</span>
+    {items.length > 0 && (
+      <span class="cta-items">
+        {items.map((item) => (
+          <span class="cta-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>
+            {item}
+          </span>
+        ))}
+      </span>
+    )}
+  </span>
+  <span class="cta-arrow" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+  </span>
+</a>
+
+<style>
+  .cta {
+    --cta-top: #00a375;
+    --cta-bottom: #007a5b;
+    --cta-edge: #00412f;
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    overflow: hidden;
+    padding: 8px 8px 8px 26px;
+    border-radius: 9999px;
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap;
+    background: linear-gradient(to bottom, var(--cta-top), var(--cta-bottom));
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 0 var(--cta-edge), 0 12px 22px rgba(0, 64, 46, 0.28);
+    transition: scale 0.2s ease-out, translate 0.12s ease-out, filter 0.2s, box-shadow 0.12s ease-out;
+  }
+  .cta:hover { scale: 1.03; filter: brightness(1.08); }
+  .cta:active {
+    scale: 1;
+    translate: 0 3px;
+    box-shadow: 0 1px 0 var(--cta-edge), 0 4px 8px rgba(0, 64, 46, 0.3);
+  }
+  .cta:focus-visible { outline: 3px solid #7ee0bb; outline-offset: 4px; }
+
+  .cta-shine {
+    position: absolute;
+    inset-block: 0;
+    left: -150%;
+    width: 100%;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transform: skewX(-20deg);
+  }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .cta:hover .cta-shine { animation: cta-shine-sweep 0.75s forwards; }
+  }
+  @keyframes cta-shine-sweep { to { left: 150%; } }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .cta--bounce { animation: cta-bounce 1.8s ease-in-out infinite; }
+  }
+  @keyframes cta-bounce {
+    0%, 100% { transform: translateY(-5px); }
+    50% { transform: translateY(0); }
+  }
+
+  .cta-body { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .cta-text {
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  }
+  .cta-arrow {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #fff;
+    color: #007a5b;
+    box-shadow: 0 2px 6px rgba(0, 40, 28, 0.25);
+  }
+  .cta-arrow svg { width: 18px; height: 18px; transition: transform 0.3s; }
+  .cta:hover .cta-arrow svg { transform: translateX(3px); }
+
+  .cta-items { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12.5px; font-weight: 600; color: rgba(255, 255, 255, 0.92); }
+  .cta-item { display: inline-flex; align-items: center; gap: 4px; }
+  .cta-item svg { width: 13px; height: 13px; color: #9ff2cc; }
+
+  /* Tamaños */
+  .cta--sm { gap: 10px; padding: 5px 5px 5px 18px; box-shadow: 0 3px 0 var(--cta-edge), 0 8px 14px rgba(0, 64, 46, 0.22); }
+  .cta--sm:active { translate: 0 2px; }
+  .cta--sm .cta-text { font-size: 15px; font-weight: 700; }
+  .cta--sm .cta-arrow { width: 30px; height: 30px; }
+  .cta--sm .cta-arrow svg { width: 15px; height: 15px; }
+
+  .cta--lg { gap: 20px; padding: 12px 12px 12px 32px; white-space: normal; }
+  .cta--lg .cta-text { font-size: 22px; }
+  .cta--lg .cta-arrow { width: 52px; height: 52px; }
+  .cta--lg .cta-arrow svg { width: 24px; height: 24px; }
+  @media (min-width: 768px) {
+    .cta--lg { box-shadow: 0 5px 0 var(--cta-edge), 0 16px 28px rgba(0, 64, 46, 0.3); }
+    .cta--lg:active { translate: 0 4px; }
+    .cta--lg .cta-text { font-size: 24px; }
+  }
+  @media (max-width: 480px) {
+    .cta--lg { padding-left: 22px; gap: 12px; }
+    .cta--lg .cta-text { font-size: 19px; }
+    .cta--lg .cta-items { font-size: 11.5px; }
+    .cta--lg .cta-arrow { width: 44px; height: 44px; }
+  }
+</style>
