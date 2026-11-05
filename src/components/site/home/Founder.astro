@@ -1,0 +1,24 @@
+---
+// «Hola, soy Jose»: foto, texto, cita y botón de plazas.
+import SeatButton from '../SeatButton.astro';
+import jose from '../../../assets/site/jose.webp';
+---
+<section class="sec" id="jose">
+  <div class="wrap fnd">
+    <div class="photo">
+      <img src={jose.src} width={jose.width} height={jose.height} alt="Jose Whittembury dando una formación a dentistas" loading="lazy">
+      <div class="stamp"><i><svg><use href="#i-user"/></svg></i><span><b>Hablas conmigo</b><small>Sin gestores de cuenta ni intermediarios</small></span></div>
+    </div>
+    <div class="fnd-copy">
+      <span class="eyebrow">Quién está detrás</span>
+      <h2 class="h2">Hola, soy <span class="hand">Jose</span>.</h2>
+      <p>Soy economista por la <b>University of Toronto</b> y me dedico solo al marketing dental. Escribí los ebooks de esta web para explicar lo que veo cada semana: <b>dentistas muy buenos con la agenda a medias</b>, porque su publicidad habla de la clínica y no de los tratamientos.</p>
+      <p>Diseño cada campaña yo mismo. Por eso acepto <b>solo 10 clínicas a la vez</b>, y solo en España. Cuando se cierra el plazo, no entra nadie más hasta el siguiente grupo.</p>
+      <div class="pull"><svg><use href="#i-quote"/></svg><span>Marketing dental es vender tratamientos dentales. No la clínica, ni al dentista.</span></div>
+      <div class="tags"><span>#SoloClínicasDentales</span><span>#SoloEspaña</span><span>#Economista</span><span>#AnálisisDeDatos</span></div>
+      <div class="seats">
+        <SeatButton href="#contacto" label="Pregúntame si hay plaza" />
+      </div>
+    </div>
+  </div>
+</section>

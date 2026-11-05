@@ -1,0 +1,46 @@
+---
+// Carrusel de anuncios bajo el hero (como tryholo.ai): una fila continua, vídeos en bucle sin sonido y anuncios estáticos.
+// PENDIENTE: anuncios reales. Los de aquí son ejemplos (clínicas ficticias).
+import kidMp4 from '../../../assets/site/ad-kid.mp4';
+import kidWebm from '../../../assets/site/ad-kid.webm';
+import kidPoster from '../../../assets/site/ad-kid-poster.webp';
+import alignerMp4 from '../../../assets/site/ad-aligner.mp4';
+import alignerWebm from '../../../assets/site/ad-aligner.webm';
+import alignerPoster from '../../../assets/site/ad-aligner-poster.webp';
+import implantMp4 from '../../../assets/site/ad-implant.mp4';
+import implantWebm from '../../../assets/site/ad-implant.webm';
+import implantPoster from '../../../assets/site/ad-implant-poster.webp';
+import patientMp4 from '../../../assets/site/ad-patient.mp4';
+import patientWebm from '../../../assets/site/ad-patient.webm';
+import patientPoster from '../../../assets/site/ad-patient-poster.webp';
+import adFriends from '../../../assets/site/ad-friends.webp';
+import adEbook from '../../../assets/site/ad-ebook.webp';
+import adOverhead from '../../../assets/site/ad-overhead.webp';
+import adDoc from '../../../assets/site/ad-doc.webp';
+
+type Card = { k: string; pub?: string; v?: string; w?: string; p?: string; i?: string; tag?: string; t?: string };
+const cards: Card[] = [
+  { k: 'p v', v: kidMp4, w: kidWebm, p: kidPoster.src },
+  { k: 't', i: adFriends.src, tag: 'Carillas · Málaga', t: 'Carillas que no parecen carillas' },
+  { k: 'p v', v: alignerMp4, w: alignerWebm, p: alignerPoster.src },
+  { k: 's', i: adEbook.src, pub: 'Del ebook' },
+  { k: 'p v', v: implantMp4, w: implantWebm, p: implantPoster.src },
+  { k: 't', i: adOverhead.src, tag: 'Primera visita · Bilbao', t: 'Revisión y limpieza para nuevos pacientes' },
+  { k: 'p v', v: patientMp4, w: patientWebm, p: patientPoster.src },
+  { k: 's', i: adDoc.src, tag: 'Implantes · Valencia', t: '¿Te falta una muela? Implante con corona' },
+];
+const sets = [cards, cards]; // dos copias para que el bucle sea continuo
+---
+<section class="reel" aria-label="Anuncios de ejemplo en movimiento">
+  <div class="reel-track" id="reel">
+    {sets.map((set, s) => set.map((c) => (
+      <figure class={`reel-card ${c.k}`} aria-hidden={s === 1 ? 'true' : undefined}>
+        <span class="pub">{c.pub || 'Publicidad'}</span>
+        {c.v
+          ? <><video poster={c.p} muted loop playsinline preload="metadata"><source src={c.w} type="video/webm"><source src={c.v} type="video/mp4"></video><span class="vid"><svg><use href="#i-play"/></svg></span></>
+          : <img src={c.i} alt="" loading="lazy" />}
+        {c.t && <figcaption><span class="tag">{c.tag}</span><b>{c.t}</b></figcaption>}
+      </figure>
+    )))}
+  </div>
+</section>

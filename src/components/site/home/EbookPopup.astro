@@ -1,0 +1,21 @@
+---
+// Pop-up del ebook (estructura de acquisition.com). Se abre a los 7 s, al intentar salir en escritorio y desde los botones del ebook.
+import p1 from '../../../assets/site/ebook-p1.webp';
+import p3 from '../../../assets/site/ebook-p3.webp';
+import p8 from '../../../assets/site/ebook-p8.webp';
+import face from '../../../assets/site/jose-face.webp';
+---
+<div class="pop" id="pop" hidden role="dialog" aria-modal="true" aria-labelledby="pop-h">
+  <div class="pop-card">
+    <button class="pop-x" type="button" id="pop-x" aria-label="Cerrar"><svg><use href="#i-x"/></svg></button>
+    <span class="pop-eyebrow">Para dueños de clínicas dentales en España</span>
+    <h2 id="pop-h">Llévate gratis «Secretos millonarios del marketing dental»</h2>
+    <p class="pop-sub">Muchos dentistas muy buenos tienen la agenda a medias. Aquí está el porqué y el arreglo, explicado para empezar desde cero.</p>
+    <div class="pop-fan" aria-hidden="true"><img class="l" src={p8.src} alt="" loading="lazy"><img class="c" src={p1.src} alt="" loading="lazy"><img class="r" src={p3.src} alt="" loading="lazy"></div>
+    <p class="pop-proof">Escrito en 2026 por Jose Whittembury · 4 capítulos · 77 páginas</p>
+    <form class="pop-form" id="pop-form" novalidate><input type="email" name="email" required placeholder="Tu correo" aria-label="Tu correo" autocomplete="email"><button class="btn btn-wa" type="submit">Sí, envíame el ebook</button></form>
+    <p class="pop-done" id="pop-done">¡Listo! Te lo mando al correo en un minuto.</p>
+    <div class="pop-quote"><img src={face.src} alt="" loading="lazy"><p><b>Jose Whittembury:</b> «Esta guía está hecha para que un dentista sin experiencia en redes sociales pueda iniciarse en el marketing dental.»</p></div>
+    <button class="pop-skip" type="button" id="pop-skip">Ahora no, gracias</button>
+  </div>
+</div>

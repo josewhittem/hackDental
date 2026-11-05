@@ -1,0 +1,30 @@
+---
+// Pie: con columnas en la home; centrado y sin salidas en la landing de rediseño.
+interface Props {
+  variant?: 'home' | 'landing';
+}
+const { variant = 'home' } = Astro.props;
+const year = new Date().getFullYear();
+---
+{variant === 'home' ? (
+  <footer class="foot2">
+    <div class="wrap">
+      <div>
+        <a class="logo" href="/" aria-label="HackDental, inicio"><svg class="hd-word" viewBox="0 0 1740 254" aria-hidden="true"><use href="#logo-hd"/></svg></a>
+        <p>Publicidad especializada para clínicas dentales en España. Los anuncios y clínicas que aparecen como ejemplo son ilustrativos. Los resultados dependen de cada clínica y no están garantizados.</p>
+        <p>© {year} HackDental</p>
+      </div>
+      <div><h4>Gratis</h4><a href="#herramientas">Calculadora de presupuestos</a><a href="#ebook" data-pop>Ebook</a><a href="/rediseno-web">Rediseño web gratis</a></div>
+      <div><h4>HackDental</h4><a href="#resultados">Resultados</a><a href="#jose">Quién soy</a><a href="#faq">Preguntas</a></div>
+      <div><h4>Legal</h4><a href="/politicas">Aviso legal</a><a href="/politicas">Privacidad</a><a href="/politicas">Cookies</a></div>
+    </div>
+  </footer>
+) : (
+  <footer class="foot2 foot-c">
+    <div class="wrap">
+      <a class="logo" href="/" aria-label="HackDental, volver al inicio"><svg class="hd-word" viewBox="0 0 1740 254" aria-hidden="true"><use href="#logo-hd"/></svg></a>
+      <p>Publicidad especializada para clínicas dentales en España. Las webs, clínicas, reseñas y textos que aparecen como ejemplo son ilustrativos.</p>
+      <p class="legal"><span>© {year} HackDental</span><a href="/politicas">Aviso legal</a><a href="/politicas">Privacidad</a><a href="/politicas">Cookies</a></p>
+    </div>
+  </footer>
+)}

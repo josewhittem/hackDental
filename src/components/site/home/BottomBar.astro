@@ -1,0 +1,12 @@
+---
+// Barra fija inferior: aparece al hacer scroll y se esconde al llegar al bloque final.
+const open = '{n} de 10 plazas libres';
+const urg = 'Quedan {n} de 10 plazas';
+const full = 'Cupo completo · lista de espera';
+---
+<div class="deadbar" id="deadbar">
+  <div class="in">
+    <p class="msg"><b data-open={open} data-urg={urg} data-full={full}>Quedan 3 de 10 plazas</b><span class="x"> · Grupo 2027 · solo España</span></p>
+    <a class="btn btn-wa" href="#contacto"><svg><use href="#i-wa"/></svg><span data-open="Pedir plaza" data-full="Lista de espera">Pedir plaza</span></a>
+  </div>
+</div>
