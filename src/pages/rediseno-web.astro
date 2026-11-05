@@ -1,0 +1,29 @@
+---
+// Landing «Rediseño web gratis»: un solo camino (pedir el rediseño), sin menú ni salidas salvo el logo.
+import SiteLayout from '../layouts/SiteLayout.astro';
+import TopBar from '../components/site/TopBar.astro';
+import LandingHero from '../components/site/landing/LandingHero.astro';
+import HowItWorks from '../components/site/landing/HowItWorks.astro';
+import ForWho from '../components/site/landing/ForWho.astro';
+import LandingFaq from '../components/site/landing/LandingFaq.astro';
+import LandingFinal from '../components/site/landing/LandingFinal.astro';
+import FooterSite from '../components/site/FooterSite.astro';
+import StickBar from '../components/site/landing/StickBar.astro';
+---
+<SiteLayout
+  title="HackDental · Rediseño web gratis para clínicas dentales"
+  description="Renovamos el sitio web de tu clínica dental para atraer pacientes. Gratis, listo en 7 días y sin compromiso. Solo para clínicas en España."
+>
+  <TopBar variant="landing" />
+  <LandingHero />
+  <HowItWorks />
+  <ForWho />
+  <LandingFaq />
+  <LandingFinal />
+  <FooterSite variant="landing" />
+  <StickBar />
+</SiteLayout>
+
+<script>
+  import '../scripts/landing.js';
+</script>

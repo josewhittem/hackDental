@@ -1,0 +1,29 @@
+---
+// Hero de la home: encuadre, titular, una frase, botón de plazas y el VSL a la derecha (debajo en móvil).
+import SeatButton from '../SeatButton.astro';
+import poster from '../../../assets/site/vsl-poster.webp';
+import vslMp4 from '../../../assets/site/vsl.mp4';
+import vslWebm from '../../../assets/site/vsl.webm';
+---
+<section class="hero3" id="top">
+  <div class="wrap">
+    <div class="tcol">
+      <p class="qual">Agencia de marketing dental · Solo en España</p>
+      <h1>Más implantes y ortodoncia para <span class="hl" id="h1hl">clínicas dentales de +500.000&nbsp;€</span>.</h1>
+      <p class="sub">Un anuncio por tratamiento, en tu zona y con el WhatsApp contestado, para que tu agenda de 2027 no dependa del boca a boca.</p>
+      <div class="ctas">
+        <SeatButton id="pz" href="#contacto" label="Solicita tu plaza" />
+      </div>
+      <p class="note">Solo para clínicas que ya pasan de 500.000 € al año. ¿Aún no? Empieza por las <a href="#herramientas">herramientas gratis</a>.</p>
+    </div>
+    <div class="vcol">
+      <div class="vsl" id="vsl">
+        <!-- PENDIENTE: vídeo real de presentación (este es un clip de ejemplo de 12 s) -->
+        <video id="vsl-v" poster={poster.src} muted loop playsinline preload="auto" aria-label="Vídeo de presentación de HackDental"><source src={vslWebm} type="video/webm"><source src={vslMp4} type="video/mp4"></video>
+        <button class="vsl-unmute" id="vsl-unmute" type="button" aria-label="Activar el sonido del vídeo"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 8.5a5 5 0 0 1 0 7M18.6 6a8.5 8.5 0 0 1 0 12"/></svg><b>Tu vídeo ya ha empezado</b><span><em class="d">Haz clic</em><em class="m">Toca</em> para activar el sonido</span></button>
+        <button class="vsl-play" id="vsl-play" type="button" aria-label="Ver el vídeo"><svg><use href="#i-play"/></svg></button>
+        <div class="vsl-bar"><i id="vsl-prog"></i></div>
+      </div>
+    </div>
+  </div>
+</section>

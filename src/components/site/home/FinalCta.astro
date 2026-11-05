@@ -1,0 +1,15 @@
+---
+// Bloque final «¿Listo para crecer?»: botón de plazas en blanco que abre WhatsApp, y la cuenta atrás.
+import SeatButton from '../SeatButton.astro';
+import { site, wa } from '../../../data/site';
+const link = wa('Hola Jose, quiero solicitar una plaza para mi clínica');
+---
+<section class="final wrap" id="contacto">
+  <div class="box">
+    <h2>¿Listo para crecer?</h2>
+    <p>Escríbeme por WhatsApp ({site.phone}), cuéntame qué tratamiento quieres llenar y te digo si hay plaza para tu zona.</p>
+    <SeatButton href={link} label="Pedir plaza" inv noTime />
+    <div class="cdline"><small data-open="La puerta se cierra en" data-full="Plazo cerrado">La puerta se cierra en</small><div class="cd mini" data-cd></div></div>
+    <svg class="mascot" viewBox="0 0 380 330" aria-hidden="true"><use href="#mascot"/></svg>
+  </div>
+</section>

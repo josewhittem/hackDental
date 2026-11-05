@@ -1,0 +1,18 @@
+---
+// Preguntas frecuentes de la home.
+const faqs = [
+  ['¿Trabajáis con clínicas fuera de España?', 'No. Solo trabajamos con clínicas dentales en España, porque los anuncios dependen de cómo buscan tratamiento los pacientes aquí.'],
+  ['¿Por qué un número limitado de clínicas?', 'Porque Jose diseña cada campaña en persona. Aceptamos 10 clínicas por grupo y cerramos en una fecha fija; cuando llega, o antes si se ocupan las plazas, solo queda la lista de espera para el siguiente.'],
+  ['¿Tengo que tener redes sociales activas?', 'No. Para atraer pacientes de tu barrio no necesitas seguidores. Necesitas anuncios específicos y alguien que conteste los mensajes.'],
+  ['¿Qué tiene que ver la inteligencia artificial?', 'En 2027 la clínica que crece contesta al momento, hace seguimiento sin depender de que alguien se acuerde y decide con datos. Eso es parte de lo que montamos contigo. Nada de vídeos virales.'],
+  ['¿Las herramientas son gratis de verdad?', 'Sí. Las calculadoras y los ebooks son gratuitos y puedes usarlos sin hablar con nadie.'],
+];
+---
+<section class="sec faq" id="faq">
+  <div class="wrap">
+    <h2 class="h2">Preguntas frecuentes</h2>
+    {faqs.map(([q, a], i) => (
+      <details open={i === 0}><summary>{q}<i><svg><use href="#i-plus"/></svg></i></summary><p>{a}</p></details>
+    ))}
+  </div>
+</section>

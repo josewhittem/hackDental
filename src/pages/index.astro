@@ -1,13 +1,37 @@
 ---
-import Hero from '../components/Hero.astro';
-import NuevosPacientes from '../components/NuevosPacientes.astro';
-import PreguntasFrecuentes from '../components/PreguntasFrecuentes.astro';
-import Layout from '../layouts/Layout.astro';
-
+// Home de HackDental (diseño v3): hero con VSL, carrusel de anuncios, resultados, herramientas, Jose, preguntas y contacto.
+import SiteLayout from '../layouts/SiteLayout.astro';
+import TopBar from '../components/site/TopBar.astro';
+import Hero from '../components/site/home/Hero.astro';
+import Reel from '../components/site/home/Reel.astro';
+import Facts from '../components/site/home/Facts.astro';
+import Results from '../components/site/home/Results.astro';
+import Tools from '../components/site/home/Tools.astro';
+import Founder from '../components/site/home/Founder.astro';
+import Faq from '../components/site/home/Faq.astro';
+import FinalCta from '../components/site/home/FinalCta.astro';
+import FooterSite from '../components/site/FooterSite.astro';
+import EbookPopup from '../components/site/home/EbookPopup.astro';
+import BottomBar from '../components/site/home/BottomBar.astro';
 ---
+<SiteLayout
+  title="HackDental · Marketing dental para clínicas en España"
+  description="Más implantes y ortodoncia para clínicas dentales de +500.000 €. Un anuncio por tratamiento, en tu zona y con el WhatsApp contestado. Solo 10 clínicas por grupo, solo en España."
+>
+  <TopBar variant="home" />
+  <Hero />
+  <Reel />
+  <Facts />
+  <Results />
+  <Tools />
+  <Founder />
+  <Faq />
+  <FinalCta />
+  <FooterSite variant="home" />
+  <EbookPopup />
+  <BottomBar />
+</SiteLayout>
 
-<Layout>
-	<Hero />
-	<NuevosPacientes/>
-	<PreguntasFrecuentes/>
-</Layout>
+<script>
+  import '../scripts/home.js';
+</script>

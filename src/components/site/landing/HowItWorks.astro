@@ -1,0 +1,33 @@
+---
+// «Cómo funciona el rediseño gratis»: tres pasos en tarjetas blancas sobre la banda menta, con flechas que se dibujan al entrar.
+import implantShot from '../../../assets/site/ad-implant-poster.webp';
+const arrow = (cls: string) => ({ cls, d: 'M5 40C30 8 65 6 94 30', h: 'M91.6 18.4L95 31 82 30' });
+const arrows = [arrow('b1'), arrow('b2')];
+---
+<section class="sec5 how" id="como">
+  <div class="wrap">
+    <h2 class="h2b c">Cómo funciona el rediseño gratis</h2>
+    <div class="steps3 rv" id="steps3">
+      {arrows.map((a) => <svg class={`arr r ${a.cls}`} viewBox="0 0 100 50" aria-hidden="true"><path d={a.d}/><path d={a.h}/></svg>)}
+      <article class="stp">
+        <span class="stag">Paso 1 · Hoy</span>
+        <div class="stp-ui" aria-hidden="true"><div class="chat"><div class="bub me"><b>Tú</b>Hola Jose, mi web es <a>clinicaejemplo.es</a> y quiero llenar implantes.</div><div class="bub"><b>HackDental</b>Perfecto. En 7 días tienes la propuesta y la vemos juntos en una llamada corta.</div></div></div>
+        <h3>Nos mandas tu web</h3>
+        <p>Por WhatsApp: el enlace de tu web actual y el tratamiento que más quieres llenar. No hace falta nada más.</p>
+      </article>
+      <article class="stp">
+        <span class="stag">Paso 2 · En 7 días</span>
+        <div class="stp-ui" aria-hidden="true"><div class="ba2"><div class="scr2 before"><span class="cap">Antes</span><i class="t"></i><i class="l"></i><i class="l2"></i><i class="img"></i></div><svg class="arr r" viewBox="0 0 100 50" aria-hidden="true"><path d="M5 40C30 8 65 6 94 30"/><path d="M91.6 18.4L95 31 82 30"/></svg><div class="scr2 after"><span class="cap">Después</span><img src={implantShot.src} alt="" loading="lazy"><b>Implantes dentales en Chamberí</b><em>WhatsApp</em></div></div></div>
+        <h3>Rediseñamos la home y tu tratamiento</h3>
+        <p>En 7 días tienes las dos páginas, pensadas para el móvil y para el paciente que llega desde un anuncio o desde Google. Las ves en tu móvil y las repasamos juntos en una llamada corta.</p>
+      </article>
+      <article class="stp">
+        <span class="stag">Paso 3 · Tú decides</span>
+        <div class="stp-ui" aria-hidden="true"><ul class="pick"><li class="on"><i><svg><use href="#i-check"/></svg></i>Tu desarrollador<small>el diseño es tuyo</small></li><li><i><svg><use href="#i-check"/></svg></i>Tu agencia</li><li><i><svg><use href="#i-check"/></svg></i>Nosotros<small>presupuesto aparte</small></li></ul></div>
+        <h3>La implementas con quien quieras</h3>
+        <p>Sin cambiar de proveedor ni de hosting: con tu desarrollador, con tu agencia o con nosotros. El diseño es tuyo, hagas lo que hagas.</p>
+      </article>
+    </div>
+    <p class="swipe-hint">Desliza para ver los tres pasos →</p>
+  </div>
+</section>

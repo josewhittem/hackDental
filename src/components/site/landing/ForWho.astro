@@ -1,0 +1,28 @@
+---
+// «Es para ti si…» / «Todavía no, si…»: el filtro de la oferta (España, web propia, +500.000 € al año).
+const yes = [
+  'Tu clínica está en España, tiene web propia y pasa de 500.000 € al año.',
+  'Haces o quieres hacer publicidad y la web es donde aterriza.',
+  'Quieres llenar un tratamiento concreto, no «tener más visitas».',
+  'Alguien contesta el WhatsApp en horario de clínica.',
+];
+const no = [
+  'Aún no tienes web ni dominio.',
+  'Buscas una web para «estar», sin intención de captar pacientes.',
+  'La clínica está fuera de España.',
+];
+---
+<section class="sec5 who2" id="quien">
+  <div class="wrap">
+    <div class="who2-box">
+      <div class="col yes">
+        <h3><i><svg><use href="#i-check"/></svg></i>Es para ti si…</h3>
+        <ul>{yes.map((t) => <li><svg><use href="#i-check"/></svg><span>{t}</span></li>)}</ul>
+      </div>
+      <div class="col no">
+        <h3><i><svg><use href="#i-x"/></svg></i>Todavía no, si…</h3>
+        <ul>{no.map((t) => <li><svg><use href="#i-x"/></svg><span>{t}</span></li>)}</ul>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,58 @@
+---
+// Herramientas: calculadora de presupuestos sin firmar + tres recursos (ebook, rediseño web, grupo 2027).
+import SeatButton from '../SeatButton.astro';
+import ebookCover from '../../../assets/site/ebook-cover.webp';
+import implantShot from '../../../assets/site/ad-implant-poster.webp';
+---
+<section class="sec" id="herramientas">
+  <div class="wrap">
+    <div class="road">
+      <div class="copy">
+        <span class="eyebrow">Herramienta gratis · 2 minutos</span>
+        <h2 class="h2">¿Cuánto dinero tienes en presupuestos sin firmar?</h2>
+        <p>Pon los números de tu clínica y mira cuánto se queda cada año en la carpeta. Sin registro y sin llamada.</p>
+        <a class="btn btn-light" href="#contacto">Ver mi informe completo<svg><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="box">
+        <div class="fld"><span class="lb"><label for="c-n">Presupuestos al mes</label><b id="c-n-o">20</b></span><input type="range" id="c-n" min="5" max="60" step="1" value="20"></div>
+        <div class="fld"><span class="lb"><label for="c-i">Importe medio</label><b id="c-i-o">2.800 €</b></span><input type="range" id="c-i" min="500" max="8000" step="100" value="2800"></div>
+        <div class="fld"><span class="lb"><span>¿Qué parte se firma?</span></span><div class="pcts" id="c-p"><button type="button" data-p="25" aria-pressed="false">25 %</button><button type="button" data-p="40" aria-pressed="true">40 %</button><button type="button" data-p="60" aria-pressed="false">60 %</button><button type="button" data-p="75" aria-pressed="false">75 %</button></div></div>
+        <div class="res"><small>Sin firmar al año</small><div class="n" id="c-out">403.200 €</div><p>Recuperar 1 de cada 10 son <b id="c-rec">+40.320 €</b> al año.</p></div>
+      </div>
+    </div>
+    <div class="res-head">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <span class="eyebrow">Recursos</span>
+        <h2 class="h2" style="font-size:clamp(30px,3.4cqi,42px)">Empieza gratis, con o sin nosotros</h2>
+      </div>
+      <p class="lede" style="max-width:40ch">Un ebook, el rediseño de tu web y la puerta al grupo de 2027. Cada cosa en su sitio.</p>
+    </div>
+    <div class="res4">
+      <article class="rc">
+        <span class="badge">Gratis</span>
+        <h3>Secretos millonarios del marketing dental</h3>
+        <div class="vis"><img src={ebookCover.src} width={ebookCover.width} height={ebookCover.height} alt="Portada del ebook Secretos millonarios del marketing dental" loading="lazy"></div>
+        <a class="btn btn-wa" href="#ebook" data-pop>Descargar el ebook</a>
+      </article>
+      <article class="rc">
+        <span class="badge">Gratis · nuevo</span>
+        <h3>Te rediseñamos la web de tu clínica</h3>
+        <div class="vis web">
+          <div class="wv-brw"><i></i><i></i><i></i><span>tuclinica.es/implantes</span></div>
+          <div class="wv-page"><img src={implantShot.src} alt="" loading="lazy"><div><small>Implantes · tu barrio</small><b>Vuelve a comer de todo con implantes</b><em><svg><use href="#i-wa"/></svg>WhatsApp</em></div></div>
+          <ul class="wv-list"><li>Una página por tratamiento</li><li>WhatsApp a un toque</li><li>Propuesta en 7 días, gratis</li></ul>
+        </div>
+        <a class="btn btn-wa" href="/rediseno-web">Pedir mi rediseño gratis</a>
+      </article>
+      <article class="rc">
+        <span class="badge hot" data-open="Solo 10 plazas" data-urg="Últimas plazas" data-full="Cupo completo">Solo 10 plazas</span>
+        <h3>Grupo 2027, directo con Jose</h3>
+        <div class="vis seat">
+          <small data-open="La puerta se cierra en" data-full="Plazo cerrado">La puerta se cierra en</small>
+          <div class="cd mini" data-cd aria-label="Cuenta atrás hasta el cierre"></div>
+        </div>
+        <SeatButton href="#contacto" label="Pedir plaza" noTime />
+      </article>
+    </div>
+  </div>
+</section>

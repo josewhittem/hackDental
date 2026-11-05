@@ -1,0 +1,51 @@
+---
+// Hero de la landing: encuadre con escritura automática, titular, una frase, el botón grande y la barra de ejemplos (3D).
+// PENDIENTE: capturas reales de landings (las de ahora son de la clínica de ejemplo Novak Dental).
+import implantes from '../../../assets/site/landing-implantes.webp';
+import ortodoncia from '../../../assets/site/landing-ortodoncia.webp';
+import blanqueamiento from '../../../assets/site/landing-blanqueamiento.webp';
+import doctor from '../../../assets/site/landing-doctor.webp';
+import doctorFace from '../../../assets/site/doctor-face.webp';
+const slides = [
+  [implantes, 'Landing de implantes'],
+  [ortodoncia, 'Landing de ortodoncia'],
+  [blanqueamiento, 'Landing de blanqueamiento'],
+  [doctor, 'Landing del doctor'],
+];
+---
+<section class="hero5" id="top">
+  <div class="wrap">
+    <p class="pre">Para dueños de <b class="typ"><span id="typ" data-words="clínicas dentales|clínicas de implantes|clínicas de ortodoncia">clínicas dentales</span></b></p>
+    <h1>Renovamos el sitio web de tu clínica dental para <span class="hl" id="h1hl">atraer pacientes</span></h1>
+    <p class="sub">Contáctanos y recibe tu nuevo sitio web en <b>7 días</b>.</p>
+    <div class="ctas">
+      <a class="hd-btn" href="#pedir" aria-label="Quiero mi nuevo sitio web. Valorado en 5.000 euros; gratis, listo en 7 días, sin compromiso">
+        <span class="hd-btn-main"><svg><use href="#i-wa"/></svg>Quiero mi nuevo sitio web</span>
+        <span class="hd-btn-sub"><s>5.000 €</s> Gratis · listo en 7 días<span class="hd-opt"> · sin compromiso</span></span>
+      </a>
+    </div>
+  </div>
+  <div class="hcar" id="ejemplos">
+    <div class="wrap">
+      <section class="lb-frame" id="landing-bar" data-duration="5000" data-autoplay="true" data-doctor-img={doctorFace.src} aria-label="Ejemplos de páginas por tratamiento">
+        <div class="lb-screen" id="lb-screen">
+          {slides.map(([img, alt]) => <img class="lb-slide" src={img.src} width={img.width} height={img.height} alt={alt} />)}
+          <div class="lb-scan" id="lb-scan"></div>
+          <div class="lb-spill"></div>
+        </div>
+        <div class="lb-beam" aria-hidden="true"></div>
+        <div class="lb" id="lb-card">
+          <div class="lb-l">
+            <div class="lb-k">Tu página de</div>
+            <div class="lb-tw"><div class="lb-t" id="lb-tA"></div><div class="lb-t" id="lb-tB"></div></div>
+            <p class="lb-p" id="lb-p"></p>
+          </div>
+          <div class="lb-r" id="lb-r"></div>
+          <div class="lb-x">
+            <div class="lb-segs" id="lb-segs"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>

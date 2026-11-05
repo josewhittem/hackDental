@@ -1,0 +1,22 @@
+---
+// Bloque final «Mándanos tu web hoy»: WhatsApp directo o un formulario corto (web + WhatsApp).
+import { site, wa } from '../../../data/site';
+const link = wa('Hola, quiero el rediseño gratis de la web de mi clínica. Mi web es: ');
+---
+<section class="final wrap" id="pedir">
+  <div class="box" id="pedir-box">
+    <span class="eyebrow eyebrow-marker">Rediseño web gratis</span>
+    <h2>Mándanos tu web hoy</h2>
+    <p>Escríbenos por WhatsApp con el enlace de tu web y el tratamiento que quieres llenar. En 7 días tienes la home y la página de ese tratamiento, pensadas para que el paciente pida cita.</p>
+    <div class="price inv" aria-label="Valorado en 5.000 euros; gratis, listo en 7 días"><s>5.000 €</s><b>Gratis</b><span>· en 7 días</span></div>
+    <a class="btn btn-light big" href={link} target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg><span>WhatsApp · {site.phone}</span></a>
+    <p class="or">o déjanos tu web y te escribimos nosotros</p>
+    <form class="pform" id="pform" novalidate>
+      <input type="url" name="website" required placeholder="www.tuclinica.es" aria-label="Web de tu clínica" autocomplete="url">
+      <input type="tel" name="telefono" required placeholder="Tu WhatsApp" aria-label="Tu WhatsApp" autocomplete="tel">
+      <button class="btn btn-wa" type="submit">Pedir rediseño</button>
+    </form>
+    <p class="sent">¡Recibido! Te escribimos por WhatsApp en menos de 24 horas.</p>
+    <svg class="mascot" viewBox="0 0 380 330" aria-hidden="true"><use href="#mascot"/></svg>
+  </div>
+</section>

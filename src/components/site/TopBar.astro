@@ -1,0 +1,55 @@
+---
+// Barra superior (componente de Jose): franja oscura + barra blanca que se compacta al hacer scroll.
+// variant="home": menú, estado del cupo y cuenta atrás. variant="landing": sin menú, un solo camino.
+interface Props {
+  variant?: 'home' | 'landing';
+}
+const { variant = 'home' } = Astro.props;
+const home = variant === 'home';
+const target = home ? '#contacto' : '#pedir';
+const nav = [
+  ['#resultados', 'Resultados'],
+  ['#herramientas', 'Herramientas'],
+  ['#jose', 'Quién soy'],
+  ['#faq', 'Preguntas'],
+];
+---
+<header class:list={['hd-top', { 'hd-simple': !home }]} id="hdr">
+  <div class="hd-strip">
+    <div class="hd-strip-in">
+      <span class="hd-es"><svg viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#c60b1e"/><rect y="5" width="30" height="10" fill="#ffc400"/></svg><span class="hd-es-txt">{home ? 'Solo clínicas en España' : 'Oferta solo para España'}</span></span>
+      <span class="hd-sep"></span>
+      {home
+        ? <span class="hd-clock">Grupo 2027: cierra en <b id="hd-clock">—</b></span>
+        : <span class="hd-clock"><b>Gratis</b> · listo en 7 días · sin compromiso</span>}
+      <a href={target}>{home ? 'Mira si tu clínica encaja →' : 'Pedir mi web →'}</a>
+    </div>
+  </div>
+  <div class="hd-main">
+    <div class="hd-main-in">
+      {home && (
+        <button class="hd-burger" id="hd-burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="hd-menu">
+          <svg class="b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg class="x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      )}
+      <a class="hd-logo" href="/" aria-label="HackDental, inicio"><svg class="hd-word" viewBox="0 0 1740 254" aria-hidden="true"><use href="#logo-hd"/></svg></a>
+      {home && (
+        <nav class="hd-nav" aria-label="Principal">{nav.map(([href, label]) => <a href={href}>{label}</a>)}</nav>
+      )}
+      <div class="hd-right">
+        {home
+          ? <div class="hd-contact"><small>WhatsApp directo</small><span><i class="hd-dot" id="hdr-dot"></i><span data-avail-short>3 plazas libres</span></span></div>
+          : <div class="hd-contact"><small>WhatsApp directo</small><span><i class="hd-dot"></i>Respondemos en minutos</span></div>}
+        <a class="hd-cta" href={target}><svg><use href="#i-wa"/></svg><span class="l">{home ? 'Ver si mi clínica encaja' : 'Quiero mi nuevo sitio web'}</span><span class="s">{home ? 'Ver si encajo' : 'Pedir mi web'}</span></a>
+      </div>
+    </div>
+    {home && (
+      <div class="hd-menu" id="hd-menu">
+        <nav>{nav.map(([href, label]) => <a href={href}>{label}</a>)}</nav>
+        <a class="hd-cta" href={target}><svg><use href="#i-wa"/></svg><span class="l">Ver si mi clínica encaja</span><span class="s">Ver si encajo</span></a>
+        <small>WhatsApp directo · respondemos en minutos</small>
+      </div>
+    )}
+  </div>
+</header>

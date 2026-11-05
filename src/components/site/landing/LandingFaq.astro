@@ -1,0 +1,20 @@
+---
+// Preguntas antes de pedir el rediseño. PENDIENTE: confirmar las condiciones (7 días, home + un tratamiento, implementación aparte).
+const faqs = [
+  ['¿De verdad es gratis?', 'Sí. Es un trabajo valorado en 5.000 €: la nueva home y la página de un tratamiento, diseñadas para captar pacientes. Te lo hacemos gratis y sin compromiso. Si después quieres que lo implementemos nosotros, te pasamos un presupuesto aparte.'],
+  ['¿Por qué lo hacéis gratis?', 'Porque es la mejor forma de enseñarte cómo trabajamos. Si el rediseño te convence, quizá quieras que lo implementemos o que llevemos tu publicidad; si no, el diseño es tuyo igualmente.'],
+  ['¿Qué recibo exactamente?', 'El diseño de la nueva home y de la página del tratamiento que elijas, pensados para móvil, con los textos y la estructura listos. Lo ves en tu móvil y lo repasamos juntos en una llamada corta.'],
+  ['¿Qué tengo que hacer yo?', 'Mandar el enlace de tu web y decirnos qué tratamiento quieres llenar. Los textos y la estructura los hacemos nosotros; las fotos de la propuesta son de ejemplo hasta que la implementes con las tuyas.'],
+  ['¿Tengo que cambiar de proveedor o de hosting?', 'No. El diseño es tuyo: tu desarrollador o tu agencia pueden implementarlo donde esté tu web ahora. Si prefieres que lo hagamos nosotros, también se puede.'],
+  ['¿Cuánto tarda?', 'Siete días desde que nos mandas el enlace y el tratamiento. Pedirlo te lleva 2 minutos por WhatsApp.'],
+  ['¿Y si mi web actual me gusta?', 'Mejor todavía: la propuesta te sirve para comparar. Si la tuya ya convierte, te lo diremos y te quedas con la tuya.'],
+];
+---
+<section class="sec faq faq-tight" id="faq">
+  <div class="wrap">
+    <h2 class="h2">Preguntas antes de pedirlo</h2>
+    {faqs.map(([q, a]) => (
+      <details><summary>{q}<i><svg><use href="#i-plus"/></svg></i></summary><p>{a}</p></details>
+    ))}
+  </div>
+</section>
